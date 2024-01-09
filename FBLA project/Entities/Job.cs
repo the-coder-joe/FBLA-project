@@ -1,6 +1,6 @@
 ﻿namespace FBLA_project
 {
-    public class Opening
+    public class Job
     {
         public required string Id { get; set; }
         public required string ImgSrc { get; set; }

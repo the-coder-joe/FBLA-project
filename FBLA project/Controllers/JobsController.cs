@@ -7,23 +7,40 @@ namespace FBLA_project.Controllers
 {
     public class JobsController : Controller
     {
+
+        private List<Job> openingsData;
+        public JobsController()
+        {
+            var jsonStream = new StreamReader("C:\\Users\\jkozi\\source\\repos\\FBLA project\\FBLA project\\AvailableJobs.json");
+            String jsonString = jsonStream.ReadToEnd();
+            openingsData = JsonSerializer.Deserialize<List<Job>>(jsonString) ?? new List<Job>();
+        }
         public IActionResult Index()
         {
             return View();
         }
 
-        public IActionResult Application()
+        public IActionResult Application(string? id, ApplicationModel? returnModel)
         {
+            if (id == null)
+                return RedirectToAction("Openings");
+
+            var job = openingsData.Find(x => x.Id == id);
+            if (job == null)
+                throw new Exception("Job not found");
+
+
             if (Request.Method == "POST")
             {
-                object applicationForm = Request.Form;
-
+                Console.Write(returnModel);
                 return View();
             }
             else
             {
+                //get request - normal
+                var model = new ApplicationModel() { Job = job };
 
-                return View();
+                return View(model);
             }
         }
 
@@ -35,22 +52,11 @@ namespace FBLA_project.Controllers
         {
             var model = new OpeningsModel
             {
-                Openings = new List<Opening>()
+                Openings = new List<Job>()
             };
+            model.Openings = openingsData;
 
-
-
-            var jsonStream = new StreamReader("C:\\Users\\jkozi\\source\\repos\\FBLA project\\FBLA project\\AvailableJobs.json");
-            String jsonString = jsonStream.ReadToEnd();
-            var openingData = JsonSerializer.Deserialize<List<Opening>>(jsonString);
-
-
-            model.Openings = openingData;
-
-
-
-
-            return View();
+            return View(model);
         }
     }
 }
