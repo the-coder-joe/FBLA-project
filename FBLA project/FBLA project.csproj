@@ -7,8 +7,4 @@
     <RootNamespace>FBLA_project</RootNamespace>
   </PropertyGroup>
 
-  <ItemGroup>
-    <Folder Include="wwwroot\Images\" />
-  </ItemGroup>
-
 </Project>
