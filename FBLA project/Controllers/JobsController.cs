@@ -32,8 +32,10 @@ namespace FBLA_project.Controllers
 
             if (Request.Method == "POST")
             {
+
                 Console.Write(returnModel);
                 return View();
+
             }
             else
             {
@@ -46,7 +48,7 @@ namespace FBLA_project.Controllers
 
         public IActionResult Information()
         {
-            return View();
+            return View();nges
         }
         public IActionResult Openings()
         {
@@ -56,6 +58,7 @@ namespace FBLA_project.Controllers
             };
             model.Openings = openingsData;
 
+            
             return View(model);
         }
     }

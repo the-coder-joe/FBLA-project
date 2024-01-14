@@ -5,6 +5,8 @@
 }
 @model FBLA_project.ApplicationModel
 
+<h1>Apply for @Model.Job.Title</h1>
+<p>@Model.Job.Text</p>
 
 <form asp-controller="Jobs" asp-action="Application" asp-route-id="@Model.Job.Id" method="post">
     
@@ -13,4 +15,6 @@
 
     <input asp-for="PhoneNumber"/>
     <label asp-for="PhoneNumber">Phone Number</label>
+
+    <button type="submit">Apply</button>
 </form>

@@ -9,13 +9,13 @@
 @foreach (var opening in Model.Openings){
 <div class="container">
     <div class="card">
-        <img src="@opening.ImgSrc" class="card-img-top" />
+        <img src="@opening.ImgSrc" class="card-img-top"/>
         <div class="card-body">
             <h5 class="card-title">
                 @opening.Title
             </h5>
             <p class="card-text">@opening.Text</p>
-            <a asp-controller="Jobs" asp-action="Application" asp-rouzte-id="@opening.Id">Apply!</a> 
+            <a asp-controller="Jobs" asp-action="Application" asp-route-id="@opening.Id">Apply!</a> 
         </div>
     </div>
 </div>
