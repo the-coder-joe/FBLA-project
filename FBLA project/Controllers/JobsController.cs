@@ -11,9 +11,15 @@ namespace FBLA_project.Controllers
         private List<Job> openingsData;
         public JobsController()
         {
-            var jsonStream = new StreamReader("C:\\Users\\jkozi\\source\\repos\\FBLA project\\FBLA project\\AvailableJobs.json");
-            String jsonString = jsonStream.ReadToEnd();
-            openingsData = JsonSerializer.Deserialize<List<Job>>(jsonString) ?? new List<Job>();
+            try
+            {
+                var jsonStream = new StreamReader("C:\\Users\\jkozi\\source\\repos\\FBLA project\\FBLA project\\AvailableJobs.json");
+                String jsonString = jsonStream.ReadToEnd();
+                openingsData = JsonSerializer.Deserialize<List<Job>>(jsonString) ?? new List<Job>();
+            }
+            catch {
+            openingsData = new List<Job>(); 
+            }
         }
         public IActionResult Index()
         {
