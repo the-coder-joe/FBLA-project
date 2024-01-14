@@ -48,7 +48,7 @@ namespace FBLA_project.Controllers
 
         public IActionResult Information()
         {
-            return View();nges
+            return View();
         }
         public IActionResult Openings()
         {
