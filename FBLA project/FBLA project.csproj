@@ -7,4 +7,8 @@
     <RootNamespace>FBLA_project</RootNamespace>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Folder Include="Resumes\" />
+  </ItemGroup>
+
 </Project>

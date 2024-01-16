@@ -8,13 +8,26 @@
 <h1>Apply for @Model.Job.Title</h1>
 <p>@Model.Job.Text</p>
 
-<form asp-controller="Jobs" asp-action="Application" asp-route-id="@Model.Job.Id" method="post">
-    
-    <input asp-for="Name"/>
+<form asp-controller="Jobs" asp-action="Application" asp-route-id="@Model.Job.Id" method="post" enctype="multipart/form-data">
+
+    <input asp-for="Name" />
     <label asp-for="Name">Name</label>
 
-    <input asp-for="PhoneNumber"/>
+    <input asp-for="PhoneNumber" />
     <label asp-for="PhoneNumber">Phone Number</label>
+
+
+    <dl>
+        <dt>
+            <label asp-for="ResumeFile"></label>
+        </dt>
+        <dd>
+            <input asp-for="ResumeFile" type="file">
+            <span asp-validation-for="ResumeFile"></span>
+        </dd>
+    </dl>
+    <input asp-page-handler="Upload" class="btn" type="submit" value="Upload" />
+
 
     <button type="submit">Apply</button>
 </form>
