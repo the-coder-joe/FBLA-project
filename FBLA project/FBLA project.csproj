@@ -8,7 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Resumes\" />
+    <Folder Include="JobFolder\Resumes\" />
   </ItemGroup>
 
 </Project>
