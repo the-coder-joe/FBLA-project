@@ -8,6 +8,7 @@ namespace FBLA_project.Controllers
     {
 
         private readonly List<Job> openingsData;
+        private const string jobDirectory = @".\JobFolder";
         public JobsController()
         {
             try
@@ -22,59 +23,119 @@ namespace FBLA_project.Controllers
             }
         }
 
-        private void processApplication(Application completedApp, IFormFile ResumeFile, Job job)
+        private void processApplication(ApplicationFields? completedApp, IFormFile? ResumeFile, Job job)
         {
-            completedApp.Job = job;
+            if (ResumeFile is null) { throw new MessageException("No file uploaded"); }
+            if (completedApp is null) { throw new MessageException("Please retry"); }
+
+            if (completedApp.Name is null
+            || completedApp.Strengths is null
+            || completedApp.WhyThisJob is null
+            || completedApp.PhoneNumber is null)
+            {
+                throw new MessageException("A field wasn't filled out");
+            }
+
+
+            List<ProcessedApplication> applications;
+            List<string> appIds = new List<string>();
+            ProcessedApplication newApp;
 
             //generate lists of existing applications
-            StreamReader jsonStream = new StreamReader(@".\JobFolder\Applications.json");
-            string jsonString = jsonStream.ReadToEnd();
-            List<Application> applications = JsonSerializer.Deserialize<List<Application>>(jsonString) ?? new List<Application>();
-
-            //create list of existing application ids
-            List<string> appIds = new List<string>();
-            foreach (Application appl in applications)
+            try
             {
-                appIds.Add(appl.ApplicationId);
+                using (StreamReader jsonStream = new(Path.Combine(jobDirectory, "Applications.json")))
+                {
+                    string jsonString = jsonStream.ReadToEnd();
+                    applications = JsonSerializer.Deserialize<List<ProcessedApplication>>(jsonString) ?? new List<ProcessedApplication>();
+
+                }
+
+                //create list of existing application ids
+                foreach (ProcessedApplication appl in applications)
+                {
+                    appIds.Add(appl.ApplicationId);
+                }
+
+                //generate unique id
+
+                string newApplicationId = getUniqueId(appIds, completedApp.Name);
+
+                //create a new application that will be recorded
+                newApp = new ProcessedApplication()
+                {
+                    Fields = completedApp,
+                    ApplicationId = newApplicationId,
+                    Job = job
+                };
             }
-
-            //generate unique id
-            string newApplicationId = getUniqueId(appIds, completedApp.Name.Trim().ToLower().Remove(' ')[..5]);
-
+            catch
+            {
+                throw new MessageException("Oh no, it looks like there was a serverside error. ");
+            }
 
             //save the resume file
-            using (MemoryStream memoryStream = new MemoryStream())
+            try
             {
-                IFormFile resumeFile = ResumeFile;
-                resumeFile.CopyToAsync(memoryStream);
-
-                string fileName = resumeFile.FileName.Split(".")[0];
-                string fileExtension = resumeFile.FileName.Split(".")[1];
-
-                string uniqueFileName = getUniqueId(new List<string>(Directory.GetFiles(@".\JobFolder\Resumes")), resumeFile.FileName) + "." + fileExtension;
-                string filePath = Path.Combine(@".\JobFolder\Resumes", uniqueFileName);
-
-                // Upload the file if less than 2 MB
-                if (memoryStream.Length < 2097152)
+                using (MemoryStream memoryStream = new MemoryStream())
                 {
-                    try
+                    IFormFile resumeFile = ResumeFile;
+
+                    resumeFile.CopyToAsync(memoryStream);
+
+                    string fileName = resumeFile.FileName.Split(".")[0];
+                    string fileExtension = resumeFile.FileName.Split(".")[1];
+                    string[] exFiles = Directory.GetFiles(@".\JobFolder\Resumes\");
+                    List<string> existingFiles = new List<string>();
+                    foreach (string file in exFiles)
                     {
-                        FileStream stream = new FileStream(filePath, FileMode.Create);
-                        resumeFile.CopyTo(stream);
-                        stream.Close();
-                        completedApp.ResumeFileName = uniqueFileName;
+                        existingFiles.Add(file.Split('\\').Last().Split('.').First());
                     }
-                    catch
+
+                    string uniqueFileName = getUniqueId(existingFiles, fileName) + "." + fileExtension;
+                    string filePath = Path.Combine(@".\JobFolder\Resumes", uniqueFileName);
+
+                    // Upload the file if less than 2 MB
+                    if (memoryStream.Length < 2097152)
                     {
-                        throw new Exception("File not able to be written");
+                        try
+                        {
+                            FileStream stream = new FileStream(filePath, FileMode.Create);
+                            resumeFile.CopyTo(stream);
+                            stream.Close();
+                            newApp.ResumeFileName = uniqueFileName;
+                        }
+                        catch
+                        {
+                            throw new Exception("File not able to be written");
+                        }
                     }
-                }
-                else
-                {
-                    ModelState.AddModelError("File", "The file is too large.");
+                    else
+                    {
+                        ModelState.AddModelError("File", "The file is too large.");
+                    }
                 }
             }
+            catch
+            {
+                throw new MessageException("Oh no, there was an issue saving your resume file serverside. ");
+            }
 
+            applications.Add(newApp);
+
+            //write out the new application to the json file
+            try
+            {
+                using (StreamWriter File1 = new StreamWriter(Path.Combine(jobDirectory, "Applications.json")))
+                {
+                    string newJson = JsonSerializer.Serialize<List<ProcessedApplication>>(applications, new JsonSerializerOptions() { WriteIndented = true });
+                    File1.Write(newJson);
+                }
+            }
+            catch
+            {
+                throw new MessageException("Oh no, there was a serverside error. ");
+            }
         }
         private string getUniqueId(List<string> existingIds, string inclusionVal)
         {
@@ -98,30 +159,34 @@ namespace FBLA_project.Controllers
             Job job = this.openingsData.Find(x => x.Id == id) ?? throw new Exception("Job not found");
 
             ApplicationModel model;
-
+            string message = "";
+            bool complete = false;
             if (Request.Method == "POST")
             {
+                //post request - form submitted
                 if (returnModel is null)
                     throw new Exception("No return Model");
 
+                try
+                {
+                    processApplication(returnModel.Application, returnModel.ResumeFile, job);
+                    complete = true;
 
-                if (returnModel.ResumeFile is null)
-                    throw new Exception("No file uploaded");
-
-
-                processApplication(returnModel.Application, returnModel.ResumeFile, job);
-
+                }
+                catch (Exception e)
+                {
+                    message = e.Message;
+                    complete = false;
+                }
 
 
                 //construct the new model for returning
                 model = new ApplicationModel()
                 {
                     Job = job,
-                    Message = "Thanks for completing the application",
-                    Completed = true,
+                    Message = message,
+                    Completed = complete,
                 };
-
-                return View(model);
             }
             else
             {
@@ -140,6 +205,7 @@ namespace FBLA_project.Controllers
         {
             return View();
         }
+
         public IActionResult Openings()
         {
             OpeningsModel model = new OpeningsModel
@@ -147,7 +213,6 @@ namespace FBLA_project.Controllers
                 Openings = new List<Job>()
             };
             model.Openings = this.openingsData;
-
 
             return View(model);
         }

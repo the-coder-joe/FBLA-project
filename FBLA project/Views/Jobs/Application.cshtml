@@ -2,32 +2,43 @@
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
+
 }
 @model FBLA_project.ApplicationModel
 
-<h1>Apply for @Model.Job.Title</h1>
-<p>@Model.Job.Text</p>
+@if (Model.Completed == false)
+{
+    <h1>Apply for @Model.Job.Title</h1>
+    <p>@Model.Job.Text</p>
+}
 
-<form asp-controller="Jobs" asp-action="Application" asp-route-id="@Model.Job.Id" method="post" enctype="multipart/form-data">
+@if (Model.Completed == false)
+{
+    if (!( string.IsNullOrEmpty(Model.Message) ))
+    {
+        <div class="msg">@Model.Message</div>
+    }
+    <form asp-controller="Jobs" asp-action="Application" asp-route-id="@Model.Job.Id" method="post" enctype="multipart/form-data">
 
-    <input asp-for="Application.Name" required/>
-    <label asp-for="Application.Name">Name</label>
+        <input asp-for="Application.Name" required />
+        <label asp-for="Application.Name">Name</label>
 
-    <input asp-for="Application.PhoneNumber" equired/>
-    <label asp-for="Application.PhoneNumber">Phone Number</label>
-    
-    <textarea asp-for="Application.Strengths"required />
-    <label asp-for="Application.Strengths">What would you consider to be your strengths?</label>
-    
-    <textarea asp-for="Application.WhyThisJob" required/>
-    <label asp-for="Application.WhyThisJob">Why would you like to apply here</label>
+        <input asp-for="Application.PhoneNumber" required />
+        <label asp-for="Application.PhoneNumber">Phone Number</label>
 
-    <div class="resume-upload">
+        <textarea asp-for="Application.Strengths" required></textarea>
+        <label asp-for="Application.Strengths">What would you consider to be your strengths?</label>
+
+        <textarea asp-for="Application.WhyThisJob" required></textarea>
+        <label asp-for="Application.WhyThisJob">Why would you like to apply here?</label>
+
+        <div class="resume-upload">
             <label asp-for="ResumeFile"></label>
-            <input asp-for="ResumeFile" type="file">
+            <input asp-for="ResumeFile" type="file" required>
             <span asp-validation-for="ResumeFile"></span>
         </div>
 
 
-    <button type="submit">Apply</button>
-</form>
+        <button type="submit">Apply</button>
+    </form>
+}
