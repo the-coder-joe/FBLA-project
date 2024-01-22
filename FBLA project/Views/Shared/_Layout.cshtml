@@ -7,12 +7,14 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/FBLA_project.styles.css" asp-append-version="true" />
+
+    @RenderSection("Styles")
 </head>
 <body class="bg-dark">
     <header>
         <nav class="navbar navbar-expand-lg navbar-dark ">
             <div class="container-fluid">
-                <a class="navbar-brand" asp-controller="Home" asp-action ="Index"><image class ="logo-image" src ="/Images/logo.png"></image>Zen Tree </a>
+                <a class="navbar-brand" asp-controller="Home" asp-action="Index"><image class="logo-image" src="/Images/logo.png"></image>Zen Tree </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDarkDropdown" aria-controls="navbarNavDarkDropdown" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -31,14 +33,20 @@
                             <a class="nav-link" asp-controller="Home" asp-action="Products">Products</a>
                         </li>
                     </ul>
+                    <ul class="navbar-nav d-flex">
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="Home" asp-action="SignIn">Login</a>
+                        </li>
+
+                    </ul>
                 </div>
             </div>
         </nav>
     </header>
 
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
+    <main role="main" class="pb-3">
+        @RenderBody()
+    </main>
 
 
     <footer class="border-top footer text-muted">

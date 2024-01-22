@@ -15,4 +15,8 @@
     <Folder Include="JobFolder\Resumes\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.1" />
+  </ItemGroup>
+
 </Project>
