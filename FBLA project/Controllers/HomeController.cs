@@ -58,6 +58,7 @@ namespace FBLA_project.Controllers
             }
             return RedirectToAction("Index", "Home");
         }
+
         public IActionResult Privacy()
         {
             return View();
