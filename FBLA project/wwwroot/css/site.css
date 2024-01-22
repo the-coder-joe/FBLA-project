@@ -1,3 +1,11 @@
+:root {
+    --prime: #212529;
+    --accent: rgb(198, 160, 35);
+    --secondary: rgb(80, 149, 234);
+}
+
+
+
 html {
   font-size: 14px;
 }
@@ -15,10 +23,17 @@ html {
 html {
   position: relative;
   min-height: 100%;
+  color-scheme: dark;
 }
 
-body {
+body{
   margin-bottom: 60px;
+  color-scheme: dark;
+ 
+}
+
+nav {
+    background-color: black;
 }
 
 .logo-image {
@@ -26,3 +41,4 @@ body {
     margin: 0px 1rem 0px 0.5rem; 
     
 }
+

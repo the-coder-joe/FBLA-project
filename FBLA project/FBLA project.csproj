@@ -8,6 +8,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Include="sources.txt" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="JobFolder\Resumes\" />
   </ItemGroup>
 
