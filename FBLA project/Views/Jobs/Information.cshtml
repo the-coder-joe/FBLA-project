@@ -7,21 +7,76 @@
 
 <style>
 
-h1, p, h2, ul {color: white;font-family: Georgia, 'Times New Roman', Times, serif, Times, serif;}
+    h1, p, h2, ul {
+        color: white;
+        font-family: Georgia, 'Times New Roman', Times, serif, Times, serif;
+    }
 
+    .bs-info {
+        font-size: 20px;
+        margin: 30px;
+    }
 
-p {margin:30px;
-display:inline-block;width:30rem;
-padding: 10px; 
+    .benefit-info {
+        margin: 30px;
+        display: inline-block;
+        width: 50rem;
+        padding: 10px;
+        font-size: 20px;
+        border-radius: 10px;
+        background-color: rgba(0, 0, 0, 0.4);
+    }
 
-border-radius:10px;
-background-color:rgba(0, 0, 0, 0.4);}
+    h1 {
+        margin: 20px;
+        margin-bottom: 40;
+        font-size: 70px;
+        text-align: center;
+    }
 
-h1 {text-align:center;}
+    .subheading {
+        display: block;
+        text-align: center;
+    }
 
-h2 
+    .benefit-section {
+        margin: 15px;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        justify-content: center;
+        align-content: center;
+        align-items: center;
+    }
 
+    .reasons-list {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        align-content: flex-start;
+        justify-content: center;
+        align-items: flex-start;
+    }
 
+    .reason {
+        display: inline-block;
+        padding: 0.5rem;
+        margin: 5px;
+        border: solid 1px black;
+        border-radius: 20px;
+        background-color: rgb(45 64 75);
+        text-decoration: none;
+        font-size: 20px;
+        color: gainsboro;
+    }
+
+    .reason-link {
+    }
+
+    .separator {
+        border: 2px groove black;
+        margin: 60px 20px;
+    }
 </style>
 
 
@@ -29,32 +84,73 @@ h2
 
 
 <h1 class="title">Reasons to work with us</h1>
+<p class="bs-info">fjdsfkld;lafjdklsed augue ex, accumsan vel varius elementum, molt. Aliquam interdum, nibh sit amet consectetur temed augue ex, accumsan vel varius elementum, mostie in tortorsum dolor sit amet, consectetur adipiscing elit. Aliquam interdum, nibh sit amet consectetur temed augue ex, accumsan vel varie in tortor. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam interdum, nibh sit amet consectetur temed augue ex, accumsan vel varius elementumtortor. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam interdum, nibh sit amet consectetur temed augue ex, accumsan vel varius elementum, molestie in tortor. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam interdum, nibh sit amet consectetur temed augue ex, accumsan vel varius elementum, molestie in tortor. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam interdum, nibh sit amet consectetur temed augue ex, accumsan vel varius elementum, molestie in tortor. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam interdum, nibh sit amet consectetur temed augue ex, accumsan vel varius elementum, molestie in tortor. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam interdum, nibh sit amet consectetur temed augue ex, accumsan vel varius elementum, molestie in tortor. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam interdum, nibh sit amet consecteturmed augue ex, accumsan vel varius elementum, molestie in tortor. Lorem ipsum doiscing elit. Aliquam interdum, nibh sit amet consectetur tem</p>
 
+<ul class="reasons-list">
+    <a class="reason-link" href="#401k">
+    <li class="reason">401k (For full time employees</li>
+    </a>
+    <a class="reason-link" href="#free">
+    <li class="reason">Free car washes</li>
+    </a>
+    <a class="reason-link" href="#flexx">
+    <li class="reason">Flexible hours</li>
+    </a>
+    <a class="reason-link" href ="#team">
+    <li class="reason">Tight-knit team</li>
+    </a>
+    <a class="reason-link" href ="#scope">
+    <li class="reason">Broad Scope of Positions</li>
+    </a>
+    <a class="reason-link" href ="#mobility">
+    <li class="reason">Upward job mobility</li>
+    </a>
+</ul>
 
-    <ul>
-        <li><a>401k (For full time employees)</a></li>
-        <li><a>Free car washes</a></li>
-        <li><a>Flexible hours</a></li>
-        <li><a>Tight-knit team</a></li>
-        <li><a>Broad Scope of Positions</a></li>
-        <li><a>Upward job mobility</a></li>
-    </ul>
+<div class="separator"></div>
 
+<h2 class="subheading" id="401k">401k</h2>
+<div class="benefit-section">
+    <img src="~/Images/carosel2.jpg" />
 
-<h2>401k</h2>
-<p>Sed augue ex, accumsan vel varius elementum, molestie in tortor. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam interdum, nibh sit amet consectetur tempor, ex nulla laoreet ipsum, sed fermentum lorem risus vel ante. Etiam molestie congue lectus eu bibendum. Ut pellentesque fringilla justo. Cras ut tempus lacus. Pellentesque tristique vitae tortor nec imperdiet. Aliquam in felis placerat sem mattis pellentesque. Aenean est tortor, suscipit in metus sed, fermentum tristique dui. Morbi eget leo massa. Pellentesque mollis diam sed lacinia egestas. Quisque pretium nunc a gravida fringilla.</p>
+    <p class="benefit-info">Sed augue ex, accumsan vel varius elementum, molestie in tortor. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam interdum, nibh sit amet consectetur tempor, ex nulla laoreet ipsum, sed fermentum lorem risus vel ante. Etiam molestie congue lectus eu bibendum. Ut pellentesque fringilla justo. Cras ut tempus lacus. Pellentesque tristique vitae tortor nec imperdiet. Aliquam in felis placerat sem mattis pellentesque. Aenean est tortor, suscipit in metus sed, fermentum tristique dui. Morbi eget leo massa. Pellentesque mollis diam sed lacinia egestas. Quisque pretium nunc a gravida fringilla.</p>
+</div>
 
-<h2>Free car washes</h2>
-<p>Sed augue ex, accumsan vel varius elementum, molestie in tortor. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam interdum, nibh sit amet consectetur tempor, ex nulla laoreet ipsum, sed fermentum lorem risus vel ante. Etiam molestie congue lectus eu bibendum. Ut pellentesque fringilla justo. Cras ut tempus lacus. Pellentesque tristique vitae tortor nec imperdiet. Aliquam in felis placerat sem mattis pellentesque. Aenean est tortor, suscipit in metus sed, fermentum tristique dui. Morbi eget leo massa. Pellentesque mollis diam sed lacinia egestas. Quisque pretium nunc a gravida fringilla.</p>
+<h2 class="subheading" id="free">Free car washes</h2>
+<div class="benefit-section">
 
-<h2>Flexible hours</h2>
-<p>Sed augue ex, accumsan vel varius elementum, molestie in tortor. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam interdum, nibh sit amet consectetur tempor, ex nulla laoreet ipsum, sed fermentum lorem risus vel ante. Etiam molestie congue lectus eu bibendum. Ut pellentesque fringilla justo. Cras ut tempus lacus. Pellentesque tristique vitae tortor nec imperdiet. Aliquam in felis placerat sem mattis pellentesque. Aenean est tortor, suscipit in metus sed, fermentum tristique dui. Morbi eget leo massa. Pellentesque mollis diam sed lacinia egestas. Quisque pretium nunc a gravida fringilla.</p>
+    <p class="benefit-info">Sed augue ex, accumsan vel varius elemenonsectetur tempor, ex nulla laoreet ipsum, sed fermentum lorem risus vel ante. Etiam molestie congue lectus eu bibendum. Ut pellentesque fringilla justo. Cras ut tempus lacus. Pellentesque tristique vitae tortor nec imperdiet. Aliquam in felis placerat sem mattis pellentesque. Aenean est tortor, suscipit in metus sed, fermentum tristique dui. Morbi eget leo massa. Pellentesque mollis diam sed lacinia egestas. Quisque pretium nunc a gravida fringilla.</p>
+    <img src="~/Images/carosel2.jpg" />
 
-<h2>Tight-knit team</h2>
-<p>Sed augue ex, accumsan vel varius elementum, molestie in tortor. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam interdum, nibh sit amet consectetur tempor, ex nulla laoreet ipsum, sed fermentum lorem risus vel ante. Etiam molestie congue lectus eu bibendum. Ut pellentesque fringilla justo. Cras ut tempus lacus. Pellentesque tristique vitae tortor nec imperdiet. Aliquam in felis placerat sem mattis pellentesque. Aenean est tortor, suscipit in metus sed, fermentum tristique dui. Morbi eget leo massa. Pellentesque mollis diam sed lacinia egestas. Quisque pretium nunc a gravida fringilla.</p>
+</div>
 
-<h2>Broad Scope of Positions</h2>
-<p>Sed augue ex, accumsan vel varius elementum, molestie in tortor. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam interdum, nibh sit amet consectetur tempor, ex nulla laoreet ipsum, sed fermentum lorem risus vel ante. Etiam molestie congue lectus eu bibendum. Ut pellentesque fringilla justo. Cras ut tempus lacus. Pellentesque tristique vitae tortor nec imperdiet. Aliquam in felis placerat sem mattis pellentesque. Aenean est tortor, suscipit in metus sed, fermentum tristique dui. Morbi eget leo massa. Pellentesque mollis diam sed lacinia egestas. Quisque pretium nunc a gravida fringilla.</p>
+<h2 class="subheading" id="flexx">Flexible hours</h2>
+<div class="benefit-section">
+    <img src="~/Images/carosel2.jpg" />
 
-<h2>Upward job mobility</h2>
-<p>Sed augue ex, accumsan vel varius elementum, molestie in tortor. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam interdum, nibh sit amet consectetur tempor, ex nulla laoreet ipsum, sed fermentum lorem risus vel ante. Etiam molestie congue lectus eu bibendum. Ut pellentesque fringilla justo. Cras ut tempus lacus. Pellentesque tristique vitae tortor nec imperdiet. Aliquam in felis placerat sem mattis pellentesque. Aenean est tortor, suscipit in metus sed, fermentum tristique dui. Morbi eget leo massa. Pellentesque mollis diam sed lacinia egestas. Quisque pretium nunc a gravida fringilla.</p>
+    <p class="benefit-info">Sed augue ex, accumsan vel varius elementum, molestie in tortor. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam interdum, nibh sit amet consectetur tempor, ex nulla laoreet ipsum, sed fermentum lorem risus vel ante. Etiam molestie congue lectus eu bibendum. Ut pellentesque fringilla justo. Cras ut tempus lacus. Pellentesque tristique vitae tortor nec imperdiet. Aliquam in felis placerat sem mattis pellentesque. Aenean est tortor, suscipit in metus sed, fermentum tristique dui. Morbi eget leo massa. Pellentesque mollis diam sed lacinia egestas. Quisque pretium nunc a gravida fringilla.</p>
+
+</div>
+
+<h2 class="subheading" id="team">Tight-knit team</h2>
+<div class="benefit-section">
+
+    <p class="benefit-info"> Sed augue ex, accumsan vel varius elementum, molestie in tortor. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam interdum, nibh sit amet consectetur tempor, ex nulla laoreet ipsum, sed fermentum lorem risus vel ante. Etiam molestie congue lectus eu bibendum. Ut pellentesque fringilla justo. Cras ut tempus lacus. Pellentesque tristique vitae tortor nec imperdiet. Aliquam in felis placerat sem mattis pellentesque. Aenean est tortor, suscipit in metus sed, fermentum tristique dui. Morbi eget leo massa. Pellentesque mollis diam sed lacinia egestas. Quisque pretium nunc a gravida fringilla.</p>
+    <img src="~/Images/carosel2.jpg" />
+
+</div>
+
+<h2 class="subheading"id="scope">Broad Scope of Positions</h2>
+<div class="benefit-section">
+    <img src="~/Images/carosel2.jpg" />
+
+    <p class="benefit-info">Sed augue ex, accumsan vel varius elementum, molestie in tortor. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam interdum, nibh sit amet consectetur tempor, ex nulla laoreet ipsum, sed fermentum lorem risus vel ante. Etiam molestie congue lectus eu bibendum. Ut pellentesque fringilla justo. Cras ut tempus lacus. Pellentesque tristique vitae tortor nec imperdiet. Aliquam in felis placerat sem mattis pellentesque. Aenean est tortor, suscipit in metus sed, fermentum tristique dui. Morbi eget leo massa. Pellentesque mollis diam sed lacinia egestas. Quisque pretium nunc a gravida fringilla.</p>
+</div>
+
+<h2 class="subheading" id="mobility">Upward job mobility</h2>
+<div class="benefit-section">
+
+    <p class="benefit-info">Sed augue ex, accumsan vel varius elementum, molestie in tortor. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam interdum, nibh sit amet consectetur tempor, ex nulla laoreet ipsum, sed fermentum lorem risus vel ante. Etiam molestie congue lectus eu bibendum. Ut pellentesque fringilla justo. Cras ut tempus lacus. Pellentesque tristique vitae tortor nec imperdiet. Aliquam in felis placerat sem mattis pellentesque. Aenean est tortor, suscipit in metus sed, fermentum tristique dui. Morbi eget leo massa. Pellentesque mollis diam sed lacinia egestas. Quisque pretium nunc a gravida fringilla.</p>
+    <img src="~/Images/carosel2.jpg" />
+
+</div>
