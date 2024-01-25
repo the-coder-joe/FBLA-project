@@ -41,3 +41,12 @@ nav {
     height: 2.3rem;
     margin: 0px 1rem 0px 0.5rem;
 }
+
+.login-link {
+    text-decoration: none;
+    color: rgba(255, 255, 255, 55%);
+}
+
+    .login-link:hover {
+        color: rgba(255, 255, 255, 80%);
+    }

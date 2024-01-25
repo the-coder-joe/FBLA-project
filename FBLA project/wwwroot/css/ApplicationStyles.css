@@ -1,0 +1,50 @@
+﻿body {
+}
+
+.title {
+    
+}
+
+h1, p, label {
+    color: white;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.field {
+    margin: 20px;
+}
+
+input {
+    margin: 0px 20px;
+    
+}
+
+textarea {
+    width: 40%;
+}
+
+input, textarea {
+    border: solid 1px white;
+    border-radius: 10px;
+}
+
+.resume-upload {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.apply {
+    color: white;
+    background-color: seagreen;
+    border: solid 1px white;
+    width: 100px;
+    height: 40px;
+    border-radius: 10px;
+    font-size: 20px;
+}
+
