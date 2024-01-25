@@ -7,7 +7,7 @@
 @model FBLA_project.ApplicationModel
 
 @section Styles {
-    <link rel="stylesheet" href ="~/css/ApplicationStyles.css" />
+    <link rel="stylesheet" href="~/css/ApplicationStyles.css" />
 }
 
 @if (Model.Completed == false)
@@ -27,18 +27,22 @@
     <form asp-controller="Jobs" asp-action="Application" asp-route-id="@Model.Job.Id" method="post" enctype="multipart/form-data">
 
         <label class="field" asp-for="Application.Name">
-            Name
-            <label class="field" asp-for="Application.PhoneNumber">Phone Number <input class="form-input" asp-for="Application.PhoneNumber" required /></label>
-            <input class="form-input" asp-for="Application.Name" required />
+            Name <input class="form-input" asp-for="Application.Name" required />
         </label>
+        <label class="field" asp-for="Application.PhoneNumber">
+            Phone Number
+            <input class="form-input" asp-for="Application.PhoneNumber" required />
+        </label>
+
+
 
         <label asp-for="Application.Strengths">What would you consider to be your strengths?</label>
         <textarea class="form-input" asp-for="Application.Strengths" required></textarea>
 
         <label asp-for="Application.WhyThisJob">Why would you like to apply here? </label>
         <textarea class="form-input" asp-for="Application.WhyThisJob" required></textarea>
-        
-        
+
+
         <div class="resume-upload">
             <label asp-for="ResumeFile">Upload Resume Here</label>
             <input asp-for="ResumeFile" type="file" required>
@@ -46,6 +50,6 @@
         </div>
 
 
-        <button class ="apply" type="submit">Apply</button>
+        <button class="apply" type="submit">Apply</button>
     </form>
 }
