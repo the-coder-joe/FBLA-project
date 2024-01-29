@@ -3,12 +3,14 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using System.Diagnostics;
+using System.Text.Json;
 
-namespace FBLA_project.Controllers
-{
+namespace FBLA_project
+{ 
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private const string jobDirectory = @".\JobFolder";
         protected private bool _authenticated;
 
         public HomeController(ILogger<HomeController> logger)
@@ -29,6 +31,8 @@ namespace FBLA_project.Controllers
 
         public ActionResult Login()
         {
+            return RedirectToAction("AdminView", "Home");
+
             return View();
         }
 
@@ -49,12 +53,23 @@ namespace FBLA_project.Controllers
 
         }
 
-        public ActionResult AdminView()
+        public IActionResult AdminView()
         {
+            _authenticated = true;
             if (_authenticated)
             {
                 _authenticated = false;
-                return View();
+                List<ProcessedApplication> apps =  new List<ProcessedApplication>();
+
+                using (StreamReader jsonStream = new(Path.Combine(jobDirectory, "Applications.json")))
+                {
+                    string jsonString = jsonStream.ReadToEnd();
+                    apps = JsonSerializer.Deserialize<List<ProcessedApplication>>(jsonString) ?? new List<ProcessedApplication>();
+
+                }
+
+                AdminViewModel model = new() { Applications = apps };
+                return View(model);
             }
             return RedirectToAction("Index", "Home");
         }
