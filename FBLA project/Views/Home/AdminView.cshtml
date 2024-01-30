@@ -1,4 +1,82 @@
-﻿@page
-@model FBLA_project.AdminViewModel
-@{
+﻿@model FBLA_project.AdminViewModel
+
+<script>
+    var jsondata = @Html.Raw(Json.Serialize(Model.Applications));
+</script>
+<h1 class="title">Submitted Applicatons</h1>
+
+
+<div class="container">
+    <table id="jobApplicationsTable" class="table table-dark job-application-table">
+        <thead class="job-application-head thead-dark">
+            <tr>
+                <th>Name</th>
+                <th>Phone Number</th>
+                <th>Position</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody class="job-application-body table-striped">
+            @foreach (var application in Model.Applications)
+            {
+                <tr class="job-application-row">
+                    <td class="job-application-data">@application.Fields.Name</td>
+                    <td>@application.Fields.PhoneNumber</td>
+                    <td>@application.Job.Title</td>
+                    <td><a class="modal-open" onclick="openModal('@application.ApplicationId');">View Full Application</a></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<div id="data-modal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <div>
+            <table>
+                <thead>
+                    <tr>
+                        <td>Application Item</td>
+                        <td>Value</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="modal-item-label">Name</td>
+                        <td id="modal-name"></td>
+                    </tr>
+                    <tr>
+                        <td class="modal-item-label">Phone Number</td>
+                        <td id="modal-phoneNumber"></td>
+                    </tr>
+                    <tr>
+                        <td class="modal-item-label">Position Applied For</td>
+                        <td id="modal-position"></td>
+                    </tr>
+                    <tr>
+                        <td class="modal-item-label">Strengths</td>
+                        <td id="modal-strengths"></td>
+                    </tr>
+                    <tr>
+                        <td class="modal-item-label">Why Here?</td>
+                        <td id="modal-why"></td>
+                    </tr>
+                    <tr>
+                        <td class="modal-item-label">Resume Download</td>
+                        <td id="modal-resume"><a id="resume-download" href ="" download>Download Resume</a></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/AdminViewStyles.css" />
+}
+
+@section Scripts {
+    <script src="/js/AdminViewScripts.js"></script>
 }

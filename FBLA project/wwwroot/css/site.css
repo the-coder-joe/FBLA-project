@@ -50,3 +50,18 @@ nav {
     .login-link:hover {
         color: rgba(255, 255, 255, 80%);
     }
+
+/*Site-Wide property specifications*/
+
+h1.title {
+    color: white;
+    text-align: center;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    font-size: 70px;
+}
+
+h1, p, h2, ul {
+    color: white;
+    font-family: Georgia, 'Times New Roman', Times, serif, Times, serif;
+}

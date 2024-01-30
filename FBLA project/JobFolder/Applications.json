@@ -30,5 +30,53 @@
       "Text": "As a Car Wash Crew Trainer, you will take on a leadership role in ensuring that new and existing team members acquire the necessary skills and knowledge to excel in their roles. Your primary responsibilities will include designing and delivering training programs, providing hands-on guidance, and fostering a positive and productive learning environment.",
       "Title": "Crew Trainer"
     }
+  },
+  {
+    "ApplicationId": "namo01",
+    "ResumeFileName": "sampleresumeeeeeeeeeee03.png",
+    "Fields": {
+      "Name": "namo",
+      "PhoneNumber": "dd",
+      "Strengths": "ddd",
+      "WhyThisJob": "ffd"
+    },
+    "Job": {
+      "Id": "CWCM1",
+      "ImgSrc": "----",
+      "Text": "As a Car Wash Crew Member, you play a crucial role in maintaining the cleanliness and appearance of vehicles. Your responsibilities include operating car wash equipment, guiding customers through the process, and ensuring a smooth flow of vehicles. Attention to detail and excellent customer service skills are essential.",
+      "Title": "Crew Member"
+    }
+  },
+  {
+    "ApplicationId": "fff01",
+    "ResumeFileName": "sampleresumeeeeeeeeeee04.png",
+    "Fields": {
+      "Name": "fff",
+      "PhoneNumber": "8950321",
+      "Strengths": "ghjghjgjhg",
+      "WhyThisJob": "sdfghjkl"
+    },
+    "Job": {
+      "Id": "OA1",
+      "ImgSrc": "----",
+      "Text": "As a Car Wash Crew Trainer, you will take on a leadership role in ensuring that new and existing team members acquire the necessary skills and knowledge to excel in their roles. Your primary responsibilities will include designing and delivering training programs, providing hands-on guidance, and fostering a positive and productive learning environment.",
+      "Title": "Crew Trainer"
+    }
+  },
+  {
+    "ApplicationId": "joe01",
+    "ResumeFileName": "HYPERLAPSE_000301.JPG",
+    "Fields": {
+      "Name": "joe",
+      "PhoneNumber": "dd",
+      "Strengths": "rtfyutfyutiyutyu",
+      "WhyThisJob": " cvvggg"
+    },
+    "Job": {
+      "Id": "CSR1",
+      "ImgSrc": "----",
+      "Text": "As a Car Wash Manager, you will be responsible for overseeing the day-to-day operations of the car wash facility. Your role involves managing a team of car wash crew members, ensuring optimal performance, and delivering an exceptional customer experience. You will be accountable for achieving operational goals, maintaining equipment, and fostering a positive work environment.",
+      "Title": "Manager"
+    }
   }
 ]
