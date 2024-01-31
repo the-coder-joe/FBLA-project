@@ -59,3 +59,7 @@
     border: 2px groove gray;
     margin: 60px 200px;
 }
+
+img {
+    width: 200px;
+}
