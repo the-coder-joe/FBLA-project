@@ -16,7 +16,7 @@ form {
 }
 
 .field {
-    margin: 20px;
+    margin: 20px 0 4px 0;
 }
 
 input {
@@ -33,6 +33,17 @@ input, textarea {
     border-radius: 10px;
 }
 
+input {
+    font-size: 20px
+}
+
+input[type="file"]{
+    width: 6em;
+}
+
+label {
+    font-size: 25px;
+}
 .resume-upload {
     margin-top: 20px;
     margin-bottom: 20px;
@@ -48,3 +59,8 @@ input, textarea {
     font-size: 20px;
 }
 
+.job-info {
+    margin: 30px;
+    text-align: center;
+
+}

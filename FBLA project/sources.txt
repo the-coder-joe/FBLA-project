@@ -1,7 +1,0 @@
-main zentree pic -- https://pixabay.com/photos/tree-sunset-clouds-sky-silhouette-736885/
-
-
-sources used to write the website:
-
-	-- https://getbootstrap.com/docs/5.3/getting-started/introduction/
-	-- https://www.w3schools.com/

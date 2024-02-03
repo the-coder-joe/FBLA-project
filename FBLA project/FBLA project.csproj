@@ -8,11 +8,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Include="sources.txt" />
+    <Folder Include="JobFolder\Resumes\" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="JobFolder\Resumes\" />
+    <None Include="Views\Home\sources.cshtml" />
   </ItemGroup>
 
   <ItemGroup>

@@ -1,0 +1,31 @@
+﻿body {
+}
+
+.form-horizontal {
+    display: flex;
+
+    align-items: center;
+    flex-direction: column;
+}
+
+
+.form-control {
+    margin: auto;
+    margin-top: 10px;
+    margin-bottom: 50px;
+    width: 30em;
+}
+
+.control-label {
+    font-size: 30px;
+    color: white;
+    text-align:center;
+    display: block;
+    width: fit-content;
+}
+
+.btn {
+    font-size: 20px;
+    color: black;
+    background-color: aliceblue;
+}

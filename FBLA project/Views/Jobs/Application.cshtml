@@ -13,9 +13,13 @@
 @if (Model.Completed == false)
 {
     <h1 class="title">Apply for @Model.Job.Title</h1>
-    <p>@Model.Job.Text</p>
+    <p class="job-info">@Model.Job.Text</p>
 }
 
+@if (Model.Completed)
+{
+    <h1 class="title">Thank you for applying!</h1>
+}
 
 
 @if (Model.Completed == false)
@@ -27,19 +31,20 @@
     <form asp-controller="Jobs" asp-action="Application" asp-route-id="@Model.Job.Id" method="post" enctype="multipart/form-data">
 
         <label class="field" asp-for="Application.Name">
-            Name <input class="form-input" asp-for="Application.Name" required />
+            Name
         </label>
+            <input class="form-input" asp-for="Application.Name" required />
         <label class="field" asp-for="Application.PhoneNumber">
             Phone Number
-            <input class="form-input" asp-for="Application.PhoneNumber" required />
         </label>
+            <input class="form-input" asp-for="Application.PhoneNumber" required />
 
 
 
-        <label asp-for="Application.Strengths">What would you consider to be your strengths?</label>
+        <label class = "field" asp-for="Application.Strengths">What would you consider to be your strengths?</label>
         <textarea class="form-input" asp-for="Application.Strengths" required></textarea>
 
-        <label asp-for="Application.WhyThisJob">Why would you like to apply here? </label>
+        <label class="field" asp-for="Application.WhyThisJob">Why would you like to apply here? </label>
         <textarea class="form-input" asp-for="Application.WhyThisJob" required></textarea>
 
 

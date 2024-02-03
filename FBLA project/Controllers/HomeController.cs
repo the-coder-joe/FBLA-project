@@ -1,12 +1,10 @@
 using FBLA_project.Models;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using System.Diagnostics;
 using System.Text.Json;
 
 namespace FBLA_project
-{ 
+{
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -16,7 +14,7 @@ namespace FBLA_project
         public HomeController(ILogger<HomeController> logger)
         {
             this._logger = logger;
-            _authenticated = false;
+            this._authenticated = false;
         }
 
         public IActionResult Index()
@@ -31,21 +29,40 @@ namespace FBLA_project
 
         public ActionResult Login()
         {
-            return RedirectToAction("AdminView", "Home");
-
             return View();
-        }
+        }       
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Login(LoginModel model)
-        {
+                                    {
             if (ModelState.IsValid)
             {
-                if (true)
+                List<Admin> admins;
+                using (StreamReader jsonStream = new(Path.Combine(jobDirectory, "AdminPasswords.json")))
                 {
-                    _authenticated = true;
-                    return RedirectToAction("Index", "Home");
+                    string jsonString = jsonStream.ReadToEnd();
+                    admins = JsonSerializer.Deserialize<List<Admin>>(jsonString) ?? throw new Exception("Server Error");
+                }
+
+                Admin? admin = null;
+                foreach (Admin ad in admins)
+                {
+                    if (ad.username == model.Username)
+                    {
+                        admin = ad;
+                    }
+                }
+
+                bool adminExists = true;
+                if (admin is null)
+                {
+                    adminExists = false;
+                }
+                if (adminExists && admin.password == model.Password)
+                {
+                    this._authenticated = true;
+                    return RedirectToAction("AdminView", "Home");
                 }
             }
             ModelState.AddModelError("", "Invalid login attempt.");
@@ -55,17 +72,16 @@ namespace FBLA_project
 
         public IActionResult AdminView()
         {
-            _authenticated = true;
-            if (_authenticated)
+            this._authenticated = true;
+            if (this._authenticated)
             {
-                _authenticated = false;
-                List<ProcessedApplication> apps =  new List<ProcessedApplication>();
+                this._authenticated = false;
+                List<ProcessedApplication> apps = new List<ProcessedApplication>();
 
                 using (StreamReader jsonStream = new(Path.Combine(jobDirectory, "Applications.json")))
                 {
                     string jsonString = jsonStream.ReadToEnd();
                     apps = JsonSerializer.Deserialize<List<ProcessedApplication>>(jsonString) ?? new List<ProcessedApplication>();
-
                 }
 
                 AdminViewModel model = new() { Applications = apps };
@@ -83,6 +99,11 @@ namespace FBLA_project
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+        public IActionResult Sources()
+        {
+            return View();
         }
     }
 }

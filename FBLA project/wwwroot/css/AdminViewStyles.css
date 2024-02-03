@@ -2,7 +2,6 @@
 
 }
 
-.title {}
 
 .job-application-table {
 
@@ -20,10 +19,10 @@
 .modal-open:hover {
     cursor: pointer;
     color: aliceblue;
-    background-color: lightslategray;
+    background-color: rgba(20,20,20);
 }
 /* The Modal (background) */
-.modal {S
+.modal {
     display: none; /* Hidden by default */
     position: fixed; /* Stay in place */
     z-index: 1; /* Sit on top */
@@ -38,11 +37,11 @@
 
 /* Modal Content/Box */
 .modal-content {
-    background-color: darkslategray;
+    background-color: rgb(30, 30, 30);
     margin: 15% auto; /* 15% from the top and centered */
     padding: 20px;
     border: 1px solid #888;
-    width: 80%; /* Could be more or less, depending on screen size */
+    color: white;
 }
 
 /* The Close Button */
@@ -59,3 +58,29 @@
         text-decoration: none;
         cursor: pointer;
     }
+
+
+.job-applications-row {
+
+}
+
+table {
+    margin-left: 10px;
+}
+
+.modal-item-label {
+    font-size: 18px;
+    color: white;
+    padding: 10px;
+    padding-right: 70px
+}
+
+.modal-item-val {
+    font-size: 16px;
+    color: lightgray;
+}
+
+.table-title {
+    font-size: 24px;
+    
+}

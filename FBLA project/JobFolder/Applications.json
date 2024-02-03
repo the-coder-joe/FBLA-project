@@ -78,5 +78,69 @@
       "Text": "As a Car Wash Manager, you will be responsible for overseeing the day-to-day operations of the car wash facility. Your role involves managing a team of car wash crew members, ensuring optimal performance, and delivering an exceptional customer experience. You will be accountable for achieving operational goals, maintaining equipment, and fostering a positive work environment.",
       "Title": "Manager"
     }
+  },
+  {
+    "ApplicationId": "joe02",
+    "ResumeFileName": "Roberts Delano_crop01.jpg",
+    "Fields": {
+      "Name": "joe",
+      "PhoneNumber": "ee",
+      "Strengths": "fdsafdsa",
+      "WhyThisJob": "ssfasfsafds"
+    },
+    "Job": {
+      "Id": "OA1",
+      "ImgSrc": "/Images/CrewTrainer-istock.webp",
+      "Text": "As a Car Wash Crew Trainer, you will take on a leadership role in ensuring that new and existing team members acquire the necessary skills and knowledge to excel in their roles. Your primary responsibilities will include designing and delivering training programs, providing hands-on guidance, and fostering a positive and productive learning environment.",
+      "Title": "Crew Trainer"
+    }
+  },
+  {
+    "ApplicationId": "joe03",
+    "ResumeFileName": "Roberts Delano_crop02.jpg",
+    "Fields": {
+      "Name": "joe",
+      "PhoneNumber": "ee",
+      "Strengths": "fdsafdsa",
+      "WhyThisJob": "ssfasfsafds"
+    },
+    "Job": {
+      "Id": "OA1",
+      "ImgSrc": "/Images/CrewTrainer-istock.webp",
+      "Text": "As a Car Wash Crew Trainer, you will take on a leadership role in ensuring that new and existing team members acquire the necessary skills and knowledge to excel in their roles. Your primary responsibilities will include designing and delivering training programs, providing hands-on guidance, and fostering a positive and productive learning environment.",
+      "Title": "Crew Trainer"
+    }
+  },
+  {
+    "ApplicationId": "joe04",
+    "ResumeFileName": "Roberts Delano_crop03.jpg",
+    "Fields": {
+      "Name": "joe",
+      "PhoneNumber": "ee",
+      "Strengths": "fdsafdsa",
+      "WhyThisJob": "ssfasfsafds"
+    },
+    "Job": {
+      "Id": "OA1",
+      "ImgSrc": "/Images/CrewTrainer-istock.webp",
+      "Text": "As a Car Wash Crew Trainer, you will take on a leadership role in ensuring that new and existing team members acquire the necessary skills and knowledge to excel in their roles. Your primary responsibilities will include designing and delivering training programs, providing hands-on guidance, and fostering a positive and productive learning environment.",
+      "Title": "Crew Trainer"
+    }
+  },
+  {
+    "ApplicationId": "joe05",
+    "ResumeFileName": "Roberts Delano_crop04.jpg",
+    "Fields": {
+      "Name": "joe",
+      "PhoneNumber": "ee",
+      "Strengths": "fdsafdsa",
+      "WhyThisJob": "ssfasfsafds"
+    },
+    "Job": {
+      "Id": "OA1",
+      "ImgSrc": "/Images/CrewTrainer-istock.webp",
+      "Text": "As a Car Wash Crew Trainer, you will take on a leadership role in ensuring that new and existing team members acquire the necessary skills and knowledge to excel in their roles. Your primary responsibilities will include designing and delivering training programs, providing hands-on guidance, and fostering a positive and productive learning environment.",
+      "Title": "Crew Trainer"
+    }
   }
 ]
