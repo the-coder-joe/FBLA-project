@@ -23,6 +23,8 @@ namespace FBLA_project.Controllers
             }
         }
 
+        #region privateMethods
+        //handles all of the processing after the application has been submitted
         private void processApplication(ApplicationFields? completedApp, IFormFile? ResumeFile, Job job)
         {
             if (ResumeFile is null) { throw new MessageException("No file uploaded"); }
@@ -92,6 +94,7 @@ namespace FBLA_project.Controllers
                         existingFiles.Add(file.Split('\\').Last().Split('.').First());
                     }
 
+                    //generate a unique file name to avoid issues with doubling up on the name
                     string uniqueFileName = getUniqueId(existingFiles, fileName) + "." + fileExtension;
                     string filePath = Path.Combine(@".\JobFolder\Resumes", uniqueFileName);
 
@@ -137,6 +140,8 @@ namespace FBLA_project.Controllers
                 throw new MessageException("Oh no, there was a serverside error. ");
             }
         }
+
+        //generates a unique id ffor each application 
         private string getUniqueId(List<string> existingIds, string inclusionVal)
         {
             int suffix = 0;
@@ -147,12 +152,14 @@ namespace FBLA_project.Controllers
                 return uniqueId + suffix.ToString();
             }
         }
+        #endregion
+
         public IActionResult Index()
         {
-            return View();
+            return Redirect("/");
         }
 
-        public IActionResult ApplicationAsync(string? id, ApplicationModel? returnModel)
+        public IActionResult Application(string? id, ApplicationModel? returnModel)
         {
             if (id == null) { return RedirectToAction("Openings"); }
 
@@ -201,6 +208,7 @@ namespace FBLA_project.Controllers
             return View(model);
         }
 
+#region staticWebsites
         public IActionResult Information()
         {
             return View();
@@ -216,5 +224,6 @@ namespace FBLA_project.Controllers
 
             return View(model);
         }
+#endregion
     }
 }

@@ -27,17 +27,24 @@ namespace FBLA_project
             return View();
         }
 
+        #region AdminLogin
+
+        //distributes actual login page
         public ActionResult Login()
         {
             return View();
-        }       
+        }
 
+        //handles form submission
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Login(LoginModel model)
-                                    {
+        {
+           
             if (ModelState.IsValid)
             {
+
+                //generate list of known admins
                 List<Admin> admins;
                 using (StreamReader jsonStream = new(Path.Combine(jobDirectory, "AdminPasswords.json")))
                 {
@@ -59,9 +66,12 @@ namespace FBLA_project
                 {
                     adminExists = false;
                 }
+
+                //check if the username and password match
                 if (adminExists && admin.password == model.Password)
                 {
                     this._authenticated = true;
+                    //if they match, take you to the admin view page
                     return RedirectToAction("AdminView", "Home");
                 }
             }
@@ -72,24 +82,28 @@ namespace FBLA_project
 
         public IActionResult AdminView()
         {
-            this._authenticated = true;
+            //double check if the authentication has taken place on the prior page
             if (this._authenticated)
             {
+                //make sure that the authentication is immediatly killed
                 this._authenticated = false;
                 List<ProcessedApplication> apps = new List<ProcessedApplication>();
 
+                //read the applications from file
                 using (StreamReader jsonStream = new(Path.Combine(jobDirectory, "Applications.json")))
                 {
                     string jsonString = jsonStream.ReadToEnd();
                     apps = JsonSerializer.Deserialize<List<ProcessedApplication>>(jsonString) ?? new List<ProcessedApplication>();
                 }
 
+                //create the model for the admin view and return it
                 AdminViewModel model = new() { Applications = apps };
                 return View(model);
             }
             return RedirectToAction("Index", "Home");
         }
 
+        #endregion
         public IActionResult Privacy()
         {
             return View();
