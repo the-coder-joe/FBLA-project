@@ -3,11 +3,9 @@
 
 .form-horizontal {
     display: flex;
-
     align-items: center;
     flex-direction: column;
 }
-
 
 .form-control {
     margin: auto;
@@ -19,7 +17,7 @@
 .control-label {
     font-size: 30px;
     color: white;
-    text-align:center;
+    text-align: center;
     display: block;
     width: fit-content;
 }

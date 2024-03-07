@@ -1,14 +1,13 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Text.Json;
 
-
 namespace FBLA_project.Controllers
 {
     public class JobsController : Controller
     {
-
         private readonly List<Job> openingsData;
         private const string jobDirectory = @".\JobFolder";
+
         public JobsController()
         {
             try
@@ -24,6 +23,7 @@ namespace FBLA_project.Controllers
         }
 
         #region privateMethods
+
         //handles all of the processing after the application has been submitted
         private void processApplication(ApplicationFields? completedApp, IFormFile? ResumeFile, Job job)
         {
@@ -38,7 +38,6 @@ namespace FBLA_project.Controllers
                 throw new MessageException("A field wasn't filled out");
             }
 
-
             List<ProcessedApplication> applications;
             List<string> appIds = new List<string>();
             ProcessedApplication newApp;
@@ -50,7 +49,6 @@ namespace FBLA_project.Controllers
                 {
                     string jsonString = jsonStream.ReadToEnd();
                     applications = JsonSerializer.Deserialize<List<ProcessedApplication>>(jsonString) ?? new List<ProcessedApplication>();
-
                 }
 
                 //create list of existing application ids
@@ -141,7 +139,7 @@ namespace FBLA_project.Controllers
             }
         }
 
-        //generates a unique id ffor each application 
+        //generates a unique id ffor each application
         private string getUniqueId(List<string> existingIds, string inclusionVal)
         {
             int suffix = 0;
@@ -152,7 +150,8 @@ namespace FBLA_project.Controllers
                 return uniqueId + suffix.ToString();
             }
         }
-        #endregion
+
+        #endregion privateMethods
 
         public IActionResult Index()
         {
@@ -178,14 +177,12 @@ namespace FBLA_project.Controllers
                 {
                     processApplication(returnModel.Application, returnModel.ResumeFile, job);
                     complete = true;
-
                 }
                 catch (Exception e)
                 {
                     message = e.Message;
                     complete = false;
                 }
-
 
                 //construct the new model for returning
                 model = new ApplicationModel()
@@ -208,7 +205,8 @@ namespace FBLA_project.Controllers
             return View(model);
         }
 
-#region staticWebsites
+        #region staticWebsites
+
         public IActionResult Information()
         {
             return View();
@@ -224,6 +222,7 @@ namespace FBLA_project.Controllers
 
             return View(model);
         }
-#endregion
+
+        #endregion staticWebsites
     }
 }

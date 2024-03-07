@@ -6,8 +6,6 @@
     --secondary: rgb(80, 149, 234);
 }
 
-
-
 html {
     font-size: 14px;
 }
@@ -70,4 +68,3 @@ h1, p, h2, ul {
     color: white;
     font-family: Georgia, 'Times New Roman', Times, serif, Times, serif;
 }
-

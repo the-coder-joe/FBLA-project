@@ -2,8 +2,10 @@
 {
     public class MessageException : Exception
     {
-        public string Messge {  get; set; }
-        public MessageException(string msg) { 
+        public string Messge { get; set; }
+
+        public MessageException(string msg)
+        {
             Messge = msg;
         }
     }

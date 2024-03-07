@@ -9,7 +9,7 @@ namespace FBLA_project
     {
         private readonly ILogger<HomeController> _logger;
         private const string jobDirectory = @".\JobFolder";
-        protected private bool _authenticated;
+        protected bool _authenticated;
 
         public HomeController(ILogger<HomeController> logger)
         {
@@ -40,10 +40,8 @@ namespace FBLA_project
         [ValidateAntiForgeryToken]
         public ActionResult Login(LoginModel model)
         {
-           
             if (ModelState.IsValid)
             {
-
                 //generate list of known admins
                 List<Admin> admins;
                 using (StreamReader jsonStream = new(Path.Combine(jobDirectory, "AdminPasswords.json")))
@@ -77,7 +75,6 @@ namespace FBLA_project
             }
             ModelState.AddModelError("", "Invalid login attempt.");
             return View(model);
-
         }
 
         public IActionResult AdminView()
@@ -103,7 +100,8 @@ namespace FBLA_project
             return RedirectToAction("Index", "Home");
         }
 
-        #endregion
+        #endregion AdminLogin
+
         public IActionResult Privacy()
         {
             return View();

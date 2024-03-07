@@ -2,10 +2,9 @@
 {
     public class Job
     {
-        public required string Id { get; set; }
-        public required string ImgSrc { get; set; }
-        public required string Text { get; set; }
-        public required string Title { get; set; }
+        public string Id { get; set; }
+        public string ImgSrc { get; set; }
+        public string Text { get; set; }
+        public string Title { get; set; }
     }
 }
-
