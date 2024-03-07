@@ -12,20 +12,20 @@ namespace FBLA_project.Controllers
         {
             try
             {
-                StreamReader jsonStream = new StreamReader(@".\JobFolder\AvailableJobs.json");
+                StreamReader jsonStream = new(@".\JobFolder\AvailableJobs.json");
                 string jsonString = jsonStream.ReadToEnd();
-                this.openingsData = JsonSerializer.Deserialize<List<Job>>(jsonString) ?? new List<Job>();
+                this.openingsData = JsonSerializer.Deserialize<List<Job>>(jsonString) ?? [];
             }
             catch
             {
-                this.openingsData = new List<Job>();
+                this.openingsData = [];
             }
         }
 
         #region privateMethods
 
         //handles all of the processing after the application has been submitted
-        private void processApplication(ApplicationFields? completedApp, IFormFile? ResumeFile, Job job)
+        private void ProcessApplication(ApplicationFields? completedApp, IFormFile? ResumeFile, Job job)
         {
             if (ResumeFile is null) { throw new MessageException("No file uploaded"); }
             if (completedApp is null) { throw new MessageException("Please retry"); }
@@ -39,7 +39,7 @@ namespace FBLA_project.Controllers
             }
 
             List<ProcessedApplication> applications;
-            List<string> appIds = new List<string>();
+            List<string> appIds = [];
             ProcessedApplication newApp;
 
             //generate lists of existing applications
@@ -48,7 +48,7 @@ namespace FBLA_project.Controllers
                 using (StreamReader jsonStream = new(Path.Combine(jobDirectory, "Applications.json")))
                 {
                     string jsonString = jsonStream.ReadToEnd();
-                    applications = JsonSerializer.Deserialize<List<ProcessedApplication>>(jsonString) ?? new List<ProcessedApplication>();
+                    applications = JsonSerializer.Deserialize<List<ProcessedApplication>>(jsonString) ?? [];
                 }
 
                 //create list of existing application ids
@@ -59,7 +59,7 @@ namespace FBLA_project.Controllers
 
                 //generate unique id
 
-                string newApplicationId = getUniqueId(appIds, completedApp.Name);
+                string newApplicationId = GetUniqueId(appIds, completedApp.Name);
 
                 //create a new application that will be recorded
                 newApp = new ProcessedApplication()
@@ -77,7 +77,7 @@ namespace FBLA_project.Controllers
             //save the resume file
             try
             {
-                using (MemoryStream memoryStream = new MemoryStream())
+                using (MemoryStream memoryStream = new())
                 {
                     IFormFile resumeFile = ResumeFile;
 
@@ -86,14 +86,14 @@ namespace FBLA_project.Controllers
                     string fileName = resumeFile.FileName.Split(".")[0];
                     string fileExtension = resumeFile.FileName.Split(".")[1];
                     string[] exFiles = Directory.GetFiles(@".\JobFolder\Resumes\");
-                    List<string> existingFiles = new List<string>();
+                    List<string> existingFiles = [];
                     foreach (string file in exFiles)
                     {
                         existingFiles.Add(file.Split('\\').Last().Split('.').First());
                     }
 
                     //generate a unique file name to avoid issues with doubling up on the name
-                    string uniqueFileName = getUniqueId(existingFiles, fileName) + "." + fileExtension;
+                    string uniqueFileName = GetUniqueId(existingFiles, fileName) + "." + fileExtension;
                     string filePath = Path.Combine(@".\JobFolder\Resumes", uniqueFileName);
 
                     // Upload the file if less than 2 MB
@@ -101,7 +101,7 @@ namespace FBLA_project.Controllers
                     {
                         try
                         {
-                            FileStream stream = new FileStream(filePath, FileMode.Create);
+                            FileStream stream = new(filePath, FileMode.Create);
                             resumeFile.CopyTo(stream);
                             stream.Close();
                             newApp.ResumeFileName = uniqueFileName;
@@ -127,11 +127,9 @@ namespace FBLA_project.Controllers
             //write out the new application to the json file
             try
             {
-                using (StreamWriter File1 = new StreamWriter(Path.Combine(jobDirectory, "Applications.json")))
-                {
-                    string newJson = JsonSerializer.Serialize<List<ProcessedApplication>>(applications, new JsonSerializerOptions() { WriteIndented = true });
-                    File1.Write(newJson);
-                }
+                using StreamWriter File1 = new(Path.Combine(jobDirectory, "Applications.json"));
+                string newJson = JsonSerializer.Serialize<List<ProcessedApplication>>(applications, new JsonSerializerOptions() { WriteIndented = true });
+                File1.Write(newJson);
             }
             catch
             {
@@ -140,7 +138,7 @@ namespace FBLA_project.Controllers
         }
 
         //generates a unique id ffor each application
-        private string getUniqueId(List<string> existingIds, string inclusionVal)
+        private static string GetUniqueId(List<string> existingIds, string inclusionVal)
         {
             int suffix = 0;
             string uniqueId = inclusionVal + suffix;
@@ -175,7 +173,7 @@ namespace FBLA_project.Controllers
 
                 try
                 {
-                    processApplication(returnModel.Application, returnModel.ResumeFile, job);
+                    ProcessApplication(returnModel.Application, returnModel.ResumeFile, job);
                     complete = true;
                 }
                 catch (Exception e)
@@ -214,11 +212,10 @@ namespace FBLA_project.Controllers
 
         public IActionResult Openings()
         {
-            OpeningsModel model = new OpeningsModel
+            OpeningsModel model = new()
             {
-                Openings = new List<Job>()
+                Openings = this.openingsData ?? []
             };
-            model.Openings = this.openingsData;
 
             return View(model);
         }

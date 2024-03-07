@@ -1,12 +1,7 @@
 ﻿namespace FBLA_project
 {
-    public class MessageException : Exception
+    public class MessageException(string msg) : Exception
     {
-        public string Messge { get; set; }
-
-        public MessageException(string msg)
-        {
-            Messge = msg;
-        }
+        public string Msg { get; set; } = msg;
     }
 }

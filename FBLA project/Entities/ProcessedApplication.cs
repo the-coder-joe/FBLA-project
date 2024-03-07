@@ -2,9 +2,9 @@
 {
     public class ProcessedApplication
     {
-        public string ApplicationId { get; set; }
+        public required string ApplicationId { get; set; }
         public string? ResumeFileName { get; set; }
         public ApplicationFields? Fields { get; set; }
-        public Job Job { get; set; }
+        public required Job Job { get; set; }
     }
 }

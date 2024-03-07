@@ -2,6 +2,6 @@
 {
     public class OpeningsModel
     {
-        public List<Job> Openings { get; set; }
+        public required List<Job> Openings { get; set; }
     }
 }
