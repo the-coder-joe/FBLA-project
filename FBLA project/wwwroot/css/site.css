@@ -29,6 +29,7 @@ html {
 }
 
 body {
+    margin-top: 60px;
     margin-bottom: 60px;
     color-scheme: dark;
 }
@@ -37,11 +38,14 @@ nav {
     background-color: black;
 }
 
+main {
+    padding-top: 5px;
+}
 
 .logo-image {
     height: 2.3rem;
     margin: 0px 1rem 0px 0.5rem;
-}S
+}
 
 .login-link {
     text-decoration: none;
@@ -66,3 +70,4 @@ h1, p, h2, ul {
     color: white;
     font-family: Georgia, 'Times New Roman', Times, serif, Times, serif;
 }
+

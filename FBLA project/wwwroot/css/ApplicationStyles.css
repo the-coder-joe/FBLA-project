@@ -1,66 +1,171 @@
 ﻿body {
+    background-color: #1a1a1a;
+    color: #e0e0e0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-.title {
+/* Center block*/
+.application-form, .head-container{
+    background-color: #2a2a2a;
+    border-radius: 8px;
+    margin: 2rem auto;
+    padding: 2rem;
+}
+
+/* Headings */
+h1.title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #f0f0f0;
+    text-align: center;
+    margin-top: 0rem;
+    margin-bottom: 1rem;
+}
+
+/* Job Information */
+.head-container {
     
+    margin: 0 auto;
+    margin-top: 20px;
+    max-width: 800px;
+  
 }
-
-h1, p, label {
-    color: white;
-}
-
-form {
+.job-info {
+    
     display: flex;
-    flex-direction: column;
-    align-items: center;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+p.job-info-text {
+    display: inline-block;
+    font-size: 1.2rem;
+    line-height: 1.6;
+    text-align: center;
+    max-width: 400px;
+    font-family:Cochin, Georgia, Times, Times New Roman, serif;
+    color: rgb(218, 235, 234)
+}
+
+.job-name {
+    color: rgb(166, 168, 200);
+}
+
+img.job-img {
+    max-width: 300px;
+    display: inline-block;
+    margin: auto 0;
+    border-radius: 10px;
+}
+
+
+/* Form Styles */
+.application-form {
+    max-width: 600px;
+    background-color: #2a2a2a;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
 }
 
 .field {
-    margin: 20px 0 4px 0;
+    display: block;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #d0d0d0;
+    margin-bottom: 0.5rem;
 }
 
-input {
-    margin: 0px 20px;
-    
+.form-input {
+    width: 100%;
+    padding: 0.8rem;
+    border: 1px solid #3a3a3a;
+    border-radius: 4px;
+    background-color: #2e2e2e;
+    color: #e0e0e0;
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
 }
 
-textarea {
-    width: 40%;
+    .form-input:focus {
+        outline: none;
+        border-color: #6b6b6b;
+    }
+
+textarea.form-input {
+    resize: vertical;
+    min-height: 120px;
 }
 
-input, textarea {
-    border: solid 1px white;
-    border-radius: 10px;
-}
-
-input {
-    font-size: 20px
-}
-
-input[type="file"]{
-    width: 6em;
-}
-
-label {
-    font-size: 25px;
-}
+/* Resume Upload */
 .resume-upload {
-    margin-top: 20px;
-    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #2e2e2e;
+    padding: 0.8rem;
+    border-radius: 4px;
+    margin-bottom: 2rem;
 }
 
-.apply {
-    color: white;
-    background-color: seagreen;
-    border: solid 1px white;
-    width: 100px;
-    height: 40px;
-    border-radius: 10px;
-    font-size: 20px;
+    .resume-upload label {
+        font-size: 1.1rem;
+        font-weight: 600;
+        color: #d0d0d0;
+        margin-right: 1rem;
+    }
+
+    .resume-upload input[type="file"] {
+        flex-grow: 1;
+        padding: 0.5rem;
+        border: none;
+        background-color: transparent;
+        color: #e0e0e0;
+        font-size: 1rem;
+    }
+
+        .resume-upload input[type="file"]::file-selector-button {
+            background-color: #3a3a3a;
+            color: #e0e0e0;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+            .resume-upload input[type="file"]::file-selector-button:hover {
+                background-color: #4a4a4a;
+            }
+
+/* Submit Button */
+button.apply {
+    display: block;
+    width: 100%;
+    padding: 0.8rem;
+    border: none;
+    border-radius: 4px;
+    background-color: #4a90e2;
+    color: #f0f0f0;
+    font-size: 1.2rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
 }
 
-.job-info {
-    margin: 30px;
-    text-align: center;
+    button.apply:hover {
+        background-color: #3a7fcb;
+    }
 
+/* Message */
+.msg {
+    background-color: #2e2e2e;
+    color: #e0e0e0;
+    padding: 1rem;
+    border-radius: 4px;
+    margin-bottom: 1rem;
 }
+

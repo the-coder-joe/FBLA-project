@@ -1,0 +1,16 @@
+Bug Fixes:
+
+
+
+High Priority:
+-add carwash stuff to homepage
+-sticky nav - Done
+-membership under products
+-
+
+Low Priority:
+-info page redo
+
+
+Membership program: 
+ - ;

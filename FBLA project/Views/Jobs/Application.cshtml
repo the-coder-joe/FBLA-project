@@ -12,8 +12,16 @@
 
 @if (Model.Completed == false)
 {
-    <h1 class="title">Apply for @Model.Job.Title</h1>
-    <p class="job-info">@Model.Job.Text</p>
+    <div class="head-container">
+        <h1 class="title">Apply for 
+            <span class="job-name">@Model.Job.Title</span>
+            </h1>
+
+        <div class="job-info">
+            <img class="job-img" src="@Model.Job.ImgSrc" />
+            <p class="job-info-text">@Model.Job.Text</p>
+        </div>
+    </div>
 }
 
 @if (Model.Completed)
@@ -28,33 +36,38 @@
     {
         <div class="msg">@Model.Message</div>
     }
-    <form asp-controller="Jobs" asp-action="Application" asp-route-id="@Model.Job.Id" method="post" enctype="multipart/form-data">
-
-        <label class="field" asp-for="Application.Name">
-            Name
-        </label>
+    <form class="application-form" asp-controller="Jobs" asp-action="Application" asp-route-id="@Model.Job.Id" method="post" enctype="multipart/form-data">
+        <div class="form-group" id="item-name">
+            <label class="field" asp-for="Application.Name">
+                Name
+            </label>
             <input class="form-input" asp-for="Application.Name" required />
-        <label class="field" asp-for="Application.PhoneNumber">
-            Phone Number
-        </label>
+        </div>
+
+        <div class="form-group" id="item-phone">
+            <label class="field" asp-for="Application.PhoneNumber">
+                Phone Number
+            </label>
             <input class="form-input" asp-for="Application.PhoneNumber" required />
+        </div>
 
+        <div class="form-group" id="item-strengths">
+            <label class="field" asp-for="Application.Strengths">What would you consider to be your strengths?</label>
+            <textarea class="form-input" asp-for="Application.Strengths" required></textarea>
+        </div>
 
+        <div class="form-group" id="item-why">
+            <label class="field" asp-for="Application.WhyThisJob">Why would you like to apply here? </label>
+            <textarea class="form-input" asp-for="Application.WhyThisJob" required></textarea>
+        </div>
 
-        <label class = "field" asp-for="Application.Strengths">What would you consider to be your strengths?</label>
-        <textarea class="form-input" asp-for="Application.Strengths" required></textarea>
-
-        <label class="field" asp-for="Application.WhyThisJob">Why would you like to apply here? </label>
-        <textarea class="form-input" asp-for="Application.WhyThisJob" required></textarea>
-
-
-        <div class="resume-upload">
+        <div class="resume-upload" id="item-resume">
             <label asp-for="ResumeFile">Upload Resume Here</label>
             <input asp-for="ResumeFile" type="file" required>
             <span asp-validation-for="ResumeFile"></span>
         </div>
 
 
-        <button class="apply" type="submit">Apply</button>
+        <button class="apply" type="submit" id="item-submit-btn">Apply</button>
     </form>
 }
