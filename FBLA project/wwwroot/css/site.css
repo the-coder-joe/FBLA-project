@@ -27,7 +27,6 @@ html {
 }
 
 body {
-    margin-top: 60px;
     margin-bottom: 60px;
     color-scheme: dark;
 }
@@ -37,7 +36,7 @@ nav {
 }
 
 main {
-    padding-top: 5px;
+    padding-top: 60px;
 }
 
 .logo-image {

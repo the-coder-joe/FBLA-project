@@ -10,6 +10,10 @@
     <link rel="stylesheet" href="~/css/ApplicationStyles.css" />
 }
 
+@section Scripts {
+    <script type="text/javascript" src="~/js/ApplicationScripts.js"></script>
+}
+
 @if (Model.Completed == false)
 {
     <div class="head-container">
@@ -64,6 +68,7 @@
         <div class="resume-upload" id="item-resume">
             <label asp-for="ResumeFile">Upload Resume Here</label>
             <input asp-for="ResumeFile" type="file" required>
+            <span style="display:none;" id="file-checkbox">&#10003;</span>
             <span asp-validation-for="ResumeFile"></span>
         </div>
 
