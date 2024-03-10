@@ -9,26 +9,24 @@
 }
 <h1 class="title">Admin Login</h1>
 
-@using (Html.BeginForm("Login", "Home", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+@using (Html.BeginForm("Login", "Home", FormMethod.Post, new { @class = "form-group", role = "form" }))
 {
     @Html.AntiForgeryToken()
 
 
         @Html.LabelFor(m => m.Username, new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.TextBoxFor(m => m.Username, new { @class = "form-control" })
+        <div class="">
+            @Html.TextBoxFor(m => m.Username, new { @class = "form-input" })
             @Html.ValidationMessageFor(m => m.Username)
         </div>
 
 
         @Html.LabelFor(m => m.Password, new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+        <div class="">
+            @Html.PasswordFor(m => m.Password, new { @class = "form-input" })
             @Html.ValidationMessageFor(m => m.Password)
         </div>
 
             <button type="submit" class="btn btn-default">Login</button>
         
 }
-
-this is a test
