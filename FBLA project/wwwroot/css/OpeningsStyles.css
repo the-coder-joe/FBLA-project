@@ -28,3 +28,18 @@
     margin-bottom: 20px;
     margin-top: 20px;
 }
+
+.apply-btn {
+    display: inline-block;
+    width: 100%;
+    background-color: var(--zen-pink);
+    padding: 10px;
+    text-align:center;
+    color: white;
+    text-decoration: none;
+    transition: ease all;
+}
+.apply-btn:hover {
+    color: black;
+    background-color: var(--zen-purple);
+}
