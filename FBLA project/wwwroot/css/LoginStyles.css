@@ -1,31 +1,53 @@
-﻿body {
+﻿.form-group {
+    background-color: #2a2a2a;
+    width: 30rem;
+    margin: 0 auto;
+    padding: 20px;
 }
-
-.form-horizontal {
-    display: flex;
-
-    align-items: center;
-    flex-direction: column;
-}
-
-
-.form-control {
-    margin: auto;
-    margin-top: 10px;
-    margin-bottom: 50px;
-    width: 30em;
-}
-
 .control-label {
-    font-size: 30px;
     color: white;
-    text-align:center;
-    display: block;
-    width: fit-content;
+    font-size: 30px;
+    text-align: center;
+    width: 100%;
+    font-family: Cochin, Georgia, Times, Times New Roman, serif;
 }
 
-.btn {
-    font-size: 20px;
-    color: black;
-    background-color: aliceblue;
+.title {
+    color: #ffffff;
+    text-align: center;
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
 }
+
+.form-container {
+    max-width: 400px;
+    padding: 2rem;
+    background-color: #2c2c2c;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.form-input {
+    background-color: #404040;
+    color: #d1d1d1;
+    border: none;
+    padding: 0.8rem;
+    border-radius: 4px;
+    margin-bottom: 1rem;
+    width: 100%;
+}
+
+.btn-default {
+    background-color: #6c63ff;
+    color: #ffffff;
+    border: none;
+    padding: 0.8rem 1.2rem;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 100%;
+}
+
+    .btn-default:hover {
+        background-color: #5850e6;
+    }

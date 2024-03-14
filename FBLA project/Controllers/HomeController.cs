@@ -5,17 +5,10 @@ using System.Text.Json;
 
 namespace FBLA_project
 {
-    public class HomeController : Controller
+    public class HomeController() : Controller
     {
-        private readonly ILogger<HomeController> _logger;
         private const string jobDirectory = @".\JobFolder";
-        protected private bool _authenticated;
-
-        public HomeController(ILogger<HomeController> logger)
-        {
-            this._logger = logger;
-            this._authenticated = false;
-        }
+        protected bool _authenticated = false;
 
         public IActionResult Index()
         {
@@ -40,10 +33,8 @@ namespace FBLA_project
         [ValidateAntiForgeryToken]
         public ActionResult Login(LoginModel model)
         {
-           
             if (ModelState.IsValid)
             {
-
                 //generate list of known admins
                 List<Admin> admins;
                 using (StreamReader jsonStream = new(Path.Combine(jobDirectory, "AdminPasswords.json")))
@@ -61,15 +52,10 @@ namespace FBLA_project
                     }
                 }
 
-                bool adminExists = true;
-                if (admin is null)
-                {
-                    adminExists = false;
-                }
 
                 //check if the username and password match
-                if (adminExists && admin.password == model.Password)
-                {
+                if ((admin is not null)  && admin.password == model.Password)
+                { 
                     this._authenticated = true;
                     //if they match, take you to the admin view page
                     return RedirectToAction("AdminView", "Home");
@@ -77,7 +63,6 @@ namespace FBLA_project
             }
             ModelState.AddModelError("", "Invalid login attempt.");
             return View(model);
-
         }
 
         public IActionResult AdminView()
@@ -87,13 +72,13 @@ namespace FBLA_project
             {
                 //make sure that the authentication is immediatly killed
                 this._authenticated = false;
-                List<ProcessedApplication> apps = new List<ProcessedApplication>();
+                List<ProcessedApplication> apps = [];
 
                 //read the applications from file
                 using (StreamReader jsonStream = new(Path.Combine(jobDirectory, "Applications.json")))
                 {
                     string jsonString = jsonStream.ReadToEnd();
-                    apps = JsonSerializer.Deserialize<List<ProcessedApplication>>(jsonString) ?? new List<ProcessedApplication>();
+                    apps = JsonSerializer.Deserialize<List<ProcessedApplication>>(jsonString) ?? [];
                 }
 
                 //create the model for the admin view and return it
@@ -103,7 +88,8 @@ namespace FBLA_project
             return RedirectToAction("Index", "Home");
         }
 
-        #endregion
+        #endregion AdminLogin
+
         public IActionResult Privacy()
         {
             return View();

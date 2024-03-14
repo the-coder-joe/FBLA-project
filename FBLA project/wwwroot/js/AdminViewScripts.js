@@ -26,11 +26,11 @@ function openModal(appId) {
 
     name.innerHTML = selectedapp.fields.name;
     phoneNumber.innerHTML = selectedapp.fields.phoneNumber;
-    position.innerHTML = selectedapp.job.title; 
+    position.innerHTML = selectedapp.job.title;
     strengths.innerHTML = selectedapp.fields.strengths;
     why.innerHTML = selectedapp.fields.whyThisJob;
     download.setAttribute("href", "/Resumes/" + selectedapp.resumeFileName);
-    
+
     modal.style.display = "block";
 }
 
