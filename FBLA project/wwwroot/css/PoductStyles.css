@@ -7,7 +7,7 @@ h1, h5, h3, p {
 
 h1, h2, h3, p {
     margin: 20px;
-}   
+}
 
 .card-title {
     display: flex;
@@ -17,9 +17,10 @@ h1, h2, h3, p {
     align-content: stretch;
     align-items: center;
     padding: 15px;
-    background-color: var(--zen-pink); 
+    background-color: var(--zen-pink);
     margin: 0;
 }
+
 .wash-tile, .price {
     display: inline-block;
 }
