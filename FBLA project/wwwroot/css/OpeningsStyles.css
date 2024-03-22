@@ -37,9 +37,11 @@
     text-align:center;
     color: white;
     text-decoration: none;
-    transition: ease all;
+    transition: all 0.2s;
+    font-size: 22px
 }
 .apply-btn:hover {
     color: black;
     background-color: var(--zen-purple);
+    font-size: 24px;
 }
