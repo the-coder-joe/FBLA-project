@@ -1,13 +1,10 @@
-﻿@page
-@model FBLA_project.LoginModel
-@{
-}
-
-
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@model FBLA_project. 
 @section Styles {
-<link rel="stylesheet" href ="/css/LoginStyles.css">
+    <link rel="stylesheet" href="/css/LoginStyles.css">
 }
-<h1 class="title">Admin Login</h1>
 
 @using (Html.BeginForm("Login", "Home", FormMethod.Post, new { @class = "form-group", role = "form" }))
 {
@@ -29,12 +26,3 @@
 
     
             <button type="submit" class="btn btn-default">Login</button>
-
-    <div class="sign-up-link">
-        Don't have an account?
-        <a href="/Home/createAccount">
-            Sign Up
-        </a>
-    </div>
-        
-}
