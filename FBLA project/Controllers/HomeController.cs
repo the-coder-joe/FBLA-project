@@ -1,15 +1,23 @@
 using FBLA_project.Models;
+using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.FileProviders;
 using System.Diagnostics;
 using System.Text.Json;
 
 namespace FBLA_project
 {
-    public class HomeController() : Controller
+    public class HomeController : Controller
     {
         private const string jobDirectory = @".\JobFolder";
         protected bool _authenticated = false;
+        private UserService _userService = new UserService(@".\UserFolder\Users.json");
+        private IDataProtectionProvider _dataProtectionProvider;
 
+        public HomeController(IDataProtectionProvider dataProtectionProvider)
+        {
+            _dataProtectionProvider = dataProtectionProvider;
+        }
         public IActionResult Index()
         {
             return View();
@@ -33,36 +41,33 @@ namespace FBLA_project
         [ValidateAntiForgeryToken]
         public ActionResult Login(LoginModel model)
         {
-            if (ModelState.IsValid)
+            User? user = null;
+            try
             {
-                //generate list of known admins
-                List<Admin> admins;
-                using (StreamReader jsonStream = new(Path.Combine(jobDirectory, "AdminPasswords.json")))
-                {
-                    string jsonString = jsonStream.ReadToEnd();
-                    admins = JsonSerializer.Deserialize<List<Admin>>(jsonString) ?? throw new Exception("Server Error");
-                }
-
-                Admin? admin = null;
-                foreach (Admin ad in admins)
-                {
-                    if (ad.username == model.Username)
-                    {
-                        admin = ad;
-                    }
-                }
-
-
-                //check if the username and password match
-                if ((admin is not null)  && admin.password == model.Password)
-                { 
-                    this._authenticated = true;
-                    //if they match, take you to the admin view page
-                    return RedirectToAction("AdminView", "Home");
+                user = _userService.AuthenticateUser(model.Username, model.Password);
+            } catch (Exception ex)
+            {
+                if (ex.Message == "User does not exist") {
+                    model.Message = "This user does not exist, please create an account.";
                 }
             }
-            ModelState.AddModelError("", "Invalid login attempt.");
-            return View(model);
+            if (user is null) {
+                model.Message = "Your password is incorrect";
+                return View(model);
+            }
+
+            if (user.IsAdmin)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            var token = _userService.GenerateSessionToken(user);
+
+            //add the session token validation
+
+            HttpContext.Session.SetString("SessionToken", token);
+
+            return RedirectToAction("AdminView", "Home");
         }
 
         public IActionResult AdminView()
@@ -86,9 +91,16 @@ namespace FBLA_project
                 return View(model);
             }
             return RedirectToAction("Index", "Home");
+            
         }
 
         #endregion AdminLogin
+
+        public IActionResult CreateAccount()
+        {
+            return View();
+        }
+
 
         public IActionResult Privacy()
         {
