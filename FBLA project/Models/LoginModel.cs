@@ -12,5 +12,7 @@ namespace FBLA_project
         [DataType(DataType.Password)]
         [Display(Name = "Password")]
         public required string Password { get; set; }
+
+        public string? Message = null;
     }
 }

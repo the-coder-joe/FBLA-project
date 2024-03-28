@@ -1,4 +1,4 @@
-﻿namespace FBLA_project.Models
+﻿namespace FBLA_project
 {
     public class AccountCreationModel : LoginModel
     {

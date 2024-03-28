@@ -1,24 +1,25 @@
 ﻿@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
-@model FBLA_project. 
+@model FBLA_project.AccountCreationModel
 @section Styles {
     <link rel="stylesheet" href="/css/LoginStyles.css">
 }
+
+
 
 @using (Html.BeginForm("Login", "Home", FormMethod.Post, new { @class = "form-group", role = "form" }))
 {
     @Html.AntiForgeryToken()
 
-
-        @Html.LabelFor(m => m.Username, new { @class = "control-label col-md-2" })
+        @Html.LabelFor(m => m.Username, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="">
             @Html.TextBoxFor(m => m.Username, new { @class = "form-input" })
             @Html.ValidationMessageFor(m => m.Username)
         </div>
 
 
-        @Html.LabelFor(m => m.Password, new { @class = "control-label col-md-2" })
+        @Html.LabelFor(m => m.Password, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="">
             @Html.PasswordFor(m => m.Password, new { @class = "form-input" })
             @Html.ValidationMessageFor(m => m.Password)
@@ -26,3 +27,4 @@
 
     
             <button type="submit" class="btn btn-default">Login</button>
+}
