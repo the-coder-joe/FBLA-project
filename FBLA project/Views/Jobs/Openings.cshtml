@@ -18,8 +18,9 @@
                     @opening.Title
                 </h5>
                 <p class="card-text">@opening.Text</p>
-                <a asp-controller="Jobs" asp-action="Application" asp-route-id="@opening.Id">Apply!</a>
+                
             </div>
+            <a asp-controller="Jobs" asp-action="Application" asp-route-id="@opening.Id" class="apply-btn">Apply!</a>
         </div>
     }
 
