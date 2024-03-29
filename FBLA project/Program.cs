@@ -12,6 +12,7 @@ builder.Services.AddSession(options =>
     options.Cookie.IsEssential = true;
 });
 
+
 WebApplication app = builder.Build();
 
 // Configure the HTTP request pipeline.

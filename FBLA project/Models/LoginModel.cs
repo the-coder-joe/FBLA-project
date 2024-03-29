@@ -2,7 +2,7 @@
 
 namespace FBLA_project
 {
-    public class LoginModel
+    public class LoginModel : BaseModel
     {
         [Required]
         [Display(Name = "Username")]

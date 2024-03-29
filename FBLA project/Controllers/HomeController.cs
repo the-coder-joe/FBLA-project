@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.FileProviders;
 using System.Diagnostics;
+using System.Security.Permissions;
 using System.Text.Json;
 
 namespace FBLA_project
@@ -11,19 +12,22 @@ namespace FBLA_project
     {
         private const string jobDirectory = @".\JobFolder";
         protected bool _authenticated = false;
-        private UserService _userService = new UserService(@".\UserFolder\Users.json");
-        private IDataProtectionProvider _dataProtectionProvider;
 
-        public HomeController(IDataProtectionProvider dataProtectionProvider)
+        public HomeController()
         {
-            _dataProtectionProvider = dataProtectionProvider;
         }
         public IActionResult Index()
         {
-            return View();
+            User? user = UserService.GetUserFromHttpContext(HttpContext);
+
+            if (user is null) {
+                return View();
+            }
+
+            return View(new BaseModel { User = user});
         }
 
-        public ActionResult Products()
+        public IActionResult Products()
         {
             return View();
         }
@@ -41,33 +45,40 @@ namespace FBLA_project
         [ValidateAntiForgeryToken]
         public ActionResult Login(LoginModel model)
         {
-            User? user = null;
-            try
+            if (ModelState.IsValid)
             {
-                user = _userService.AuthenticateUser(model.Username, model.Password);
-            } catch (Exception ex)
-            {
-                if (ex.Message == "User does not exist") {
-                    model.Message = "This user does not exist, please create an account.";
+                User? user = null;
+                try
+                {
+                    user = UserService.AuthenticateUser(model.Username, model.Password);
                 }
+                catch (Exception ex)
+                {
+                    if (ex.Message == "User does not exist")
+                    {
+                        model.Message = "This user does not exist, please create an account.";
+                    }
+                }
+                if (user is null)
+                {
+                    model.Message = "Your password is incorrect";
+                    return View(model);
+                }
+
+                if (user.IsAdmin)
+                {
+                    return RedirectToAction("Index", "Home");
+                }
+
+                var token = UserService.GenerateSessionToken(user);
+
+                //add the session token validation
+
+                HttpContext.Session.SetString("SessionToken", token);
+
+                return RedirectToAction("AdminView", "Home");
             }
-            if (user is null) {
-                model.Message = "Your password is incorrect";
-                return View(model);
-            }
-
-            if (user.IsAdmin)
-            {
-                return RedirectToAction("Index", "Home");
-            }
-
-            var token = _userService.GenerateSessionToken(user);
-
-            //add the session token validation
-
-            HttpContext.Session.SetString("SessionToken", token);
-
-            return RedirectToAction("AdminView", "Home");
+            return View();
         }
 
         public IActionResult AdminView()
@@ -103,6 +114,27 @@ namespace FBLA_project
 
         public IActionResult CreateAccount()
         {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult CreateAccount(AccountCreationModel model)
+        {
+            if (ModelState.IsValid) {
+                UserBase userConstruct = new UserBase 
+                { 
+                    Name = model.Name,
+                    Username = model.Username,
+                    Password = model.Password
+                };
+
+                UserService.CreateNewUser(userConstruct);
+                model.Message = "Account has successfully been created";
+
+                return View(model);
+            }
+            
+
             return View();
         }
 
