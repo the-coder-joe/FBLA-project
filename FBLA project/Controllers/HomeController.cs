@@ -96,6 +96,11 @@ namespace FBLA_project
 
         #endregion AdminLogin
 
+        public IActionResult MyGarage()
+        {
+            return View();
+        }
+
         public IActionResult CreateAccount()
         {
             return View();
