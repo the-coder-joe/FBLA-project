@@ -46,8 +46,15 @@
     cursor: pointer;
     transition: background-color 0.3s ease;
     width: 100%;
+    margin-top: 10px;
 }
 
     .btn-default:hover {
         background-color: #5850e6;
+    }
+
+    .sign-up-link {
+        padding-top: 20px;
+        text-align: center;
+        color: white;
     }
