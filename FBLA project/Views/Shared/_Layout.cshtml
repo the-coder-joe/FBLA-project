@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@model FBLA_project.BaseModel
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -36,7 +38,14 @@
                         </li>
                     </ul>
                     <div class="d-flex ms-auto order-5 nav-item">
-                        <a class="nav-link login-link" asp-controller="Home" asp-action="Login">Login</a>
+                        @if (Model?.User is null)
+                        {
+                            <a class="nav-link login-link" asp-controller="Home" asp-action="Login">Login</a>
+                        }
+                        else
+                        {
+                            <a class="nav-link login-link" asp-controller="Home" asp-action="Index">@Model.User.Name</a>
+                        }
                     </div>
                 </div>
             </div>

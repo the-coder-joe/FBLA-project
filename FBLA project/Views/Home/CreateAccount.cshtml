@@ -7,8 +7,7 @@
 }
 
 
-
-@using (Html.BeginForm("Login", "Home", FormMethod.Post, new { @class = "form-group", role = "form" }))
+@using (Html.BeginForm("CreateAccount", "Home", FormMethod.Post, new { @class = "form-group", role = "form" }))
 {
     @Html.AntiForgeryToken()
 
@@ -25,6 +24,16 @@
             @Html.ValidationMessageFor(m => m.Password)
         </div>
 
-    
+    @Html.LabelFor(m => m.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+    <div class="">
+        @Html.TextBoxFor(m => m.Name, new { @class = "form-input" })
+        @Html.ValidationMessageFor(m => m.Name)
+    </div>
             <button type="submit" class="btn btn-default">Login</button>
+}
+
+@if (Model?.Message is not null)
+{
+    
+<h2>@Model?.Message</h2>
 }

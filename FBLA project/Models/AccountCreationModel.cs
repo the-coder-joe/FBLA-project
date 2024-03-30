@@ -2,6 +2,7 @@
 {
     public class AccountCreationModel : LoginModel
     {
-
+        public string Name { get; set; }
+        // additional information
     }
 }

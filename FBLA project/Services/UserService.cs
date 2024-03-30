@@ -1,17 +1,31 @@
-﻿
-using FBLA_project;
+﻿using Microsoft.AspNetCore.DataProtection;
 using System.Security.Cryptography;
+using System.Text.Json;
 
 namespace FBLA_project
 {
-    public class UserService
+    public static class UserService
     {
-        private string _path;
-        public UserService(string path) { _path = path; }
-        public User? AuthenticateUser(string username, string password)
+        
+        private static readonly string _path = @".\Private\Users.txt";
+        private static readonly IDataProtectionProvider _dataProtectionProvider;
+        private static readonly string _sessionTokenKey = "Session Token Key";
+        private static readonly string _userStoragekey = "User Storage Key";
+
+        private static readonly IDataProtector _sessionTokenProtector;
+        private static readonly IDataProtector _userProtector;
+
+        static UserService()
         {
-            var userList = new JsonUtil<List<User>>(_path);
-            foreach (var user in userList.Access())
+            _dataProtectionProvider = DataProtectionProvider.Create("ApplicationName");
+            _sessionTokenProtector = _dataProtectionProvider.CreateProtector(_sessionTokenKey);
+            _userProtector = _dataProtectionProvider.CreateProtector(_userStoragekey);
+        }
+        public static User? AuthenticateUser(string username, string password)
+        {
+            List<User> userList = getUsers();
+            if (userList is null) { return null; }
+            foreach (User? user in userList)
             {
                 if (user is not null)
                 {
@@ -28,27 +42,91 @@ namespace FBLA_project
             return null;
         }
 
-
-        public string GenerateSessionToken(User user)
+        public static string GenerateSessionToken(User user)
         {
-            var randomBytes = new byte[32];
-            using (var rng = RandomNumberGenerator.Create())
-            {
-                rng.GetBytes(randomBytes);
-            }
+            string userData = JsonSerializer.Serialize<User>(user);
 
-            return $"{user.Id}:{Convert.ToBase64String(randomBytes)}";
+            string token = _sessionTokenProtector.Protect(userData);
+
+            return token;
         }
 
-        public int GenerateUserId()
+        public static User? GetUserFromHttpContext(HttpContext httpContext)
         {
-            var randomBytes = new byte[2];
-            using (var rng = RandomNumberGenerator.Create())
+            string? token = httpContext.Session.GetString("SessionToken");
+
+            if (token == null)
+            {
+                return null;
+            }
+
+            string userData = _sessionTokenProtector.Unprotect(token);
+
+            User? user = JsonSerializer.Deserialize<User>(userData);
+
+            if (user is null)
+            {
+                return null;
+            }
+
+            return user;
+        }
+
+        public static void CreateNewUser(UserBase userBase)
+        {
+            User user = new User
+            {
+                Name = userBase.Name,
+                Username = userBase.Username,
+                Password = userBase.Password,
+                Id = GenerateUserId(),
+                IsAdmin = false
+            };
+
+
+            List<User> users = getUsers() ?? new List<User>();
+            users.Add(user);
+            setUsers(users);
+        }
+
+        public static void ModifyUser(int userId) {
+        
+        }
+
+        public static int GetUserByUsername(string username) 
+        { 
+        
+        }
+
+        public static User GetUserById(int id) {
+            
+        }
+        private static List<User>? getUsers()
+        {
+            string encrptedUserData = File.ReadAllText(_path);
+            if (string.IsNullOrEmpty(encrptedUserData)) { return null; }
+            string rawUserData = _userProtector.Unprotect(encrptedUserData);
+            List<User>? users = JsonSerializer.Deserialize<List<User>>(rawUserData);
+
+            return users;
+        }
+
+        private static void setUsers(List<User> users)
+        {
+            string rawUserData = JsonSerializer.Serialize(users);
+            string encriptedUserData = _userProtector.Protect(rawUserData);
+            File.WriteAllText(_path, encriptedUserData);
+
+        }
+        private static int GenerateUserId()
+        {
+            byte[] randomBytes = new byte[sizeof(Int16)];
+            using (RandomNumberGenerator rng = RandomNumberGenerator.Create())
             {
                 rng.GetBytes(randomBytes);
             }
 
-            return Convert.ToInt16(randomBytes);
+            return BitConverter.ToInt16(randomBytes);
 
         }
     }

@@ -1,6 +1,6 @@
 ﻿namespace FBLA_project
 {
-    public class ApplicationModel
+    public class ApplicationModel : BaseModel
     {
         public required Job Job { get; set; }
         public ApplicationFields? Application { get; set; }

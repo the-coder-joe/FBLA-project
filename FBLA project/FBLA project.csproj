@@ -8,8 +8,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="UserFolder\**" />
+    <Content Remove="UserFolder\**" />
+    <EmbeddedResource Remove="UserFolder\**" />
+    <None Remove="UserFolder\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="JobFolder\Resumes\" />
-    <Folder Include="UserFolder\" />
+    <Folder Include="Private\" />
   </ItemGroup>
 
   <ItemGroup>
