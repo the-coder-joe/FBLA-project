@@ -40,6 +40,12 @@ namespace FBLA_project
             return View();
         }
 
+        public IActionResult Account()
+        { 
+            
+
+            }
+
         //handles form submission
         [HttpPost]
         [ValidateAntiForgeryToken]

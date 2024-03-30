@@ -89,6 +89,18 @@ namespace FBLA_project
             setUsers(users);
         }
 
+        public static void ModifyUser(int userId) {
+        
+        }
+
+        public static int GetUserByUsername(string username) 
+        { 
+        
+        }
+
+        public static User GetUserById(int id) {
+            
+        }
         private static List<User>? getUsers()
         {
             string encrptedUserData = File.ReadAllText(_path);
