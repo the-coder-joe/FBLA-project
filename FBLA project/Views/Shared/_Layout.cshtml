@@ -38,13 +38,13 @@
                         </li>
                     </ul>
                     <div class="d-flex ms-auto order-5 nav-item">
-                        @if (Model?.User is null)
+                        @if (Model?.UnprotectedData is null)
                         {
                             <a class="nav-link login-link" asp-controller="Home" asp-action="Login">Login</a>
                         }
                         else
                         {
-                            <a class="nav-link login-link" asp-controller="Home" asp-action="Index">@Model.User.Name</a>
+                            <a class="nav-link login-link" asp-controller="Home" asp-action="Account">@Model.UnprotectedData.Name</a>
                         }
                     </div>
                 </div>
