@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.DataProtection;
+using System.Diagnostics.Eventing.Reader;
+using System.Security.Authentication;
 using System.Security.Cryptography;
 using System.Text.Json;
 
@@ -94,17 +96,17 @@ namespace FBLA_project
         {
             var users = getUsers();
             if (users == null) return null;
-            foreach(var user in users)
+            foreach (var user in users)
             {
                 if (user.UnprotectedInfo.Username == username) { return user.Id; }
-            } 
+            }
             return null;
         }
 
         public static User? GetUserById(int id)
         {
             var users = getUsers();
-            foreach(User user in users)
+            foreach (User user in users)
             {
                 if (user.Id == id)
                 {
@@ -140,6 +142,13 @@ namespace FBLA_project
 
             return BitConverter.ToInt16(randomBytes);
 
+        }
+
+        private static bool AuthenticatePassword(string password, string salt, string hash)
+        {
+            var hashingAlgorithm = System.Security.Cryptography.SHA512.Create();
+            int iterations = 1000;
+            return false;
         }
     }
 }
