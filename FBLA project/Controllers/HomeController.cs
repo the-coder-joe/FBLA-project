@@ -29,9 +29,30 @@ namespace FBLA_project
         {
             User? user = UserService.GetUserFromHttpContext(HttpContext);
             if (user is null)
-            { return View(); }
+            { return View(new ProductsModel()); }
 
-            return View(new BaseModel { UnprotectedData = user.UnprotectedInfo });
+            return View(new ProductsModel { UnprotectedData = user.UnprotectedInfo, LoginRequired = false, PurchaseSuccessful = false }); 
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Products(ProductsModel model)
+        {
+            if(ModelState.IsValid)
+            {
+                User? user= UserService.GetUserFromHttpContext(HttpContext);
+                if (user is null)
+                {
+                    return View(new ProductsModel { LoginRequired = true });
+                }
+
+                user.UnprotectedInfo.Membership = model.Membership;
+                UserService.ModifyUser(user.Id, user);
+                model.PurchaseSuccessful = true;
+                model.UnprotectedData = user.UnprotectedInfo;
+                return View(model);
+            }
+            return View(model);
         }
 
         #region AdminLogin

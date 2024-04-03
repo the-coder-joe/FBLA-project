@@ -87,9 +87,23 @@ namespace FBLA_project
             setUsers(users);
         }
 
-        public static void ModifyUser(int userId)
+        public static void ModifyUser(int userId, User newUser)
         {
-
+            List<User>? users = getUsers();
+            if(users is null)
+            {
+                return;
+            }
+            for (int i = 0; i < users.Count; i++)
+            {
+                User user = users[i];
+                if(user.Id == userId)
+                {
+                    users[i] = newUser;
+                    setUsers(users);
+                    return;
+                }
+            }
         }
 
         public static int? GetUserIdByUsername(string username)
