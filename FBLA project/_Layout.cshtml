@@ -1,0 +1,72 @@
+﻿@model FBLA_project.BaseModel
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - ZenTree</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+
+    @RenderSection("Styles", false)
+</head>
+<body class="bg-dark">
+    <header>
+        <nav class="navbar navbar-collapse-sm navbar-expand-sm navbar-dark fixed-top">
+            <div class="container-fluid">
+                <a class="navbar-brand" asp-controller="Home" asp-action="Index"><image class="logo-image" src="/Images/logo.png"></image>Zen Tree </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDarkDropdown" aria-controls="navbarNavDarkDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNavDarkDropdown">
+                    <ul class="navbar-nav">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Jobs
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-light" aria-labelledby="navbarDarkDropdownMenuLink">
+                                <li><a class="dropdown-item" asp-controller="Jobs" asp-action="Information">Information</a></li>
+                                <li><a class="dropdown-item" asp-controller="Jobs" asp-action="Openings">Openings</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="Home" asp-action="Products">Products</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="Home" asp-action="MyGarage">My Garage</a>
+                        </li>
+                    </ul>
+                    <div class="d-flex ms-auto order-5 nav-item">
+                        @if (Model?.UnprotectedData is null)
+                        {
+                            <a class="nav-link login-link" asp-controller="Home" asp-action="Login">Login</a>
+                        }
+                        else
+                        {
+                            <a class="nav-link login-link" asp-controller="Home" asp-action="Account">@Model.UnprotectedData.Name</a>
+                        }
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main role="main" class="pb-3">
+        @RenderBody()
+    </main>
+
+
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2024 - ZenTreeCarwash - <a asp-area="" asp-controller="Home" asp-action="Sources">Sources</a>
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/util.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
