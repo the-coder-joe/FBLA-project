@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.DataProtection;
+using System.Diagnostics.Eventing.Reader;
+using System.Security.Authentication;
 using System.Security.Cryptography;
 using System.Text.Json;
 
@@ -6,7 +8,7 @@ namespace FBLA_project
 {
     public static class UserService
     {
-        
+
         private static readonly string _path = @".\Private\Users.txt";
         private static readonly IDataProtectionProvider _dataProtectionProvider;
         private static readonly string _sessionTokenKey = "Session Token Key";
@@ -23,20 +25,17 @@ namespace FBLA_project
         }
         public static User? AuthenticateUser(string username, string password)
         {
-            List<User> userList = getUsers();
+            List<User>? userList = getUsers();
             if (userList is null) { return null; }
-            foreach (User? user in userList)
+            foreach (User user in userList)
             {
-                if (user is not null)
+                if (user.UnprotectedInfo.Username == username && user.ProtectedInfo.Password != password)
                 {
-                    if (user.Username == username && user.Password != password)
-                    {
-                        throw new Exception("User does not exist");
-                    }
-                    if (user.Username == username && user.Password == password)
-                    {
-                        return user;
-                    }
+                    throw new Exception("User does not exist");
+                }
+                if (user.UnprotectedInfo.Username == username && user.ProtectedInfo.Password == password)
+                {
+                    return user;
                 }
             }
             return null;
@@ -72,15 +71,14 @@ namespace FBLA_project
             return user;
         }
 
-        public static void CreateNewUser(UserBase userBase)
+        public static void CreateNewUser(ProtectedData protectedData, UnprotectedData unprotected)
         {
+
             User user = new User
             {
-                Name = userBase.Name,
-                Username = userBase.Username,
-                Password = userBase.Password,
-                Id = GenerateUserId(),
-                IsAdmin = false
+                ProtectedInfo = protectedData,
+                UnprotectedInfo = unprotected,
+                Id = GenerateUserId()
             };
 
 
@@ -89,17 +87,47 @@ namespace FBLA_project
             setUsers(users);
         }
 
-        public static void ModifyUser(int userId) {
-        
+        public static void ModifyUser(int userId, User newUser)
+        {
+            List<User>? users = getUsers();
+            if(users is null)
+            {
+                return;
+            }
+            for (int i = 0; i < users.Count; i++)
+            {
+                User user = users[i];
+                if(user.Id == userId)
+                {
+                    users[i] = newUser;
+                    setUsers(users);
+                    return;
+                }
+            }
         }
 
-        public static int GetUserByUsername(string username) 
-        { 
-        
+        public static int? GetUserIdByUsername(string username)
+        {
+            var users = getUsers();
+            if (users == null) return null;
+            foreach (var user in users)
+            {
+                if (user.UnprotectedInfo.Username == username) { return user.Id; }
+            }
+            return null;
         }
 
-        public static User GetUserById(int id) {
-            
+        public static User? GetUserById(int id)
+        {
+            var users = getUsers();
+            foreach (User user in users)
+            {
+                if (user.Id == id)
+                {
+                    return user;
+                }
+            }
+            return null;
         }
         private static List<User>? getUsers()
         {
@@ -128,6 +156,13 @@ namespace FBLA_project
 
             return BitConverter.ToInt16(randomBytes);
 
+        }
+
+        private static bool AuthenticatePassword(string password, string salt, string hash)
+        {
+            var hashingAlgorithm = System.Security.Cryptography.SHA512.Create();
+            int iterations = 1000;
+            return false;
         }
     }
 }

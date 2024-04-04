@@ -2,6 +2,7 @@
 {
     public class BaseModel
     {
-        public User? User { get; set; } 
+        public UnprotectedData? UnprotectedData { get; set; } 
+        public bool LoggedIn { get { return UnprotectedData != null; } }
     }
 }
