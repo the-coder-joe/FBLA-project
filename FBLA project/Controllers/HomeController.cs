@@ -1,6 +1,7 @@
 using FBLA_project.Models;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Diagnostics;
 using Microsoft.Extensions.FileProviders;
 using System.Diagnostics;
 using System.Security.Permissions;
@@ -11,25 +12,47 @@ namespace FBLA_project
     public class HomeController : Controller
     {
         private const string jobDirectory = @".\JobFolder";
-        protected bool _authenticated = false;
 
-        public HomeController()
-        {
-        }
         public IActionResult Index()
         {
             User? user = UserService.GetUserFromHttpContext(HttpContext);
 
-            if (user is null) {
+            if (user is null)
+            {
                 return View();
             }
 
-            return View(new BaseModel { User = user});
+            return View(new BaseModel { UnprotectedData = user.UnprotectedInfo });
         }
 
         public IActionResult Products()
         {
-            return View();
+            User? user = UserService.GetUserFromHttpContext(HttpContext);
+            if (user is null)
+            { return View(new ProductsModel()); }
+
+            return View(new ProductsModel { UnprotectedData = user.UnprotectedInfo, LoginRequired = false, PurchaseSuccessful = false }); 
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Products(ProductsModel model)
+        {
+            if(ModelState.IsValid)
+            {
+                User? user= UserService.GetUserFromHttpContext(HttpContext);
+                if (user is null)
+                {
+                    return View(new ProductsModel { LoginRequired = true });
+                }
+
+                user.UnprotectedInfo.Membership = model.Membership;
+                UserService.ModifyUser(user.Id, user);
+                model.PurchaseSuccessful = true;
+                model.UnprotectedData = user.UnprotectedInfo;
+                return View(model);
+            }
+            return View(model);
         }
 
         #region AdminLogin
@@ -37,14 +60,21 @@ namespace FBLA_project
         //distributes actual login page
         public ActionResult Login()
         {
-            return View();
+            User? user = UserService.GetUserFromHttpContext(HttpContext);
+            if (user is null)
+            { return View(); }
+
+            return RedirectToAction("Index", "Account");
         }
 
         public IActionResult Account()
-        { 
-            
+        {
+            User? user = UserService.GetUserFromHttpContext(HttpContext);
+            if (user is null)
+            { return View(); }
 
-            }
+            return View(new BaseModel { UnprotectedData = user.UnprotectedInfo });
+        }
 
         //handles form submission
         [HttpPost]
@@ -71,7 +101,7 @@ namespace FBLA_project
                     return View(model);
                 }
 
-                if (user.IsAdmin)
+                if (user.ProtectedInfo.IsAdmin)
                 {
                     return RedirectToAction("Index", "Home");
                 }
@@ -87,13 +117,20 @@ namespace FBLA_project
             return View();
         }
 
+        public IActionResult Logout()
+        {
+            HttpContext.Session.Clear();
+            return RedirectToAction("Index");
+        }
+
         public IActionResult AdminView()
         {
-            //double check if the authentication has taken place on the prior page
-            if (this._authenticated)
+            User? user = UserService.GetUserFromHttpContext(HttpContext);
+            if (user is null)
+            { return RedirectToAction("Index", "Home"); }
+
+            if (user.ProtectedInfo.IsAdmin)
             {
-                //make sure that the authentication is immediatly killed
-                this._authenticated = false;
                 List<ProcessedApplication> apps = [];
 
                 //read the applications from file
@@ -108,13 +145,13 @@ namespace FBLA_project
                 return View(model);
             }
             return RedirectToAction("Index", "Home");
-            
         }
 
         #endregion AdminLogin
 
         public IActionResult MyGarage()
         {
+
             return View();
         }
 
@@ -124,30 +161,32 @@ namespace FBLA_project
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult CreateAccount(AccountCreationModel model)
         {
-            if (ModelState.IsValid) {
-                UserBase userConstruct = new UserBase 
-                { 
-                    Name = model.Name,
-                    Username = model.Username,
-                    Password = model.Password
-                };
+            if (ModelState.IsValid)
+            {
+                //verify password is valid
+                if (model.Password == model.ConfirmPassword)
+                {
+                    UnprotectedData userInfo = model.UnprotectedInfo;
+                    ProtectedData protectedData = new ProtectedData
+                    {
+                        IsAdmin = false,
+                        Password = model.Password
+                    };
 
-                UserService.CreateNewUser(userConstruct);
-                model.Message = "Account has successfully been created";
+                    UserService.CreateNewUser(protectedData, userInfo);
+                    model.Message = "Account has successfully been created";
+                    Response.Headers.Append("REFRESH", "1;URL=/Home/Login");
 
-                return View(model);
+                    return View(model);
+                }
+
+
             }
-            
-
-            return View();
-        }
-
-
-        public IActionResult Privacy()
-        {
-            return View();
+            model.Message = "Something Went Wrong";
+            return View(model);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

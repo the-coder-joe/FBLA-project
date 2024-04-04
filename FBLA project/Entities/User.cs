@@ -2,9 +2,10 @@
 
 namespace FBLA_project
 {
-    public class User : UserBase
-    {
+    public class User
+    { 
         public required int Id { get; set; }
-        public bool IsAdmin { get; set; }
+        public required ProtectedData ProtectedInfo { get; set; }
+        public required UnprotectedData UnprotectedInfo { get; set; }
     }
 }

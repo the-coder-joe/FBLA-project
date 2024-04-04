@@ -1,15 +1,24 @@
-﻿
+﻿@model FBLA_project.ProductsModel
 
 
 @section Scripts{
-
+    <script type="text/javascript" src="~/js/ProductsSripts.js"></script>
 }
 
 
 @section Styles {
-    <link rel="stylesheet" href="~/css/PoductStyles.css" />
+    <link rel="stylesheet" href="~/css/ProductStyles.css" />
 }
 
+@if(Model.LoginRequired)
+{
+    <h1 class="header">It is required that you log in in order to make a purchase </h1>
+}
+
+@if(Model.PurchaseSuccessful)
+{
+    <script>alert("Purchase Successful")</script>
+}
 
 <h1 class="title">Products</h1>
 
@@ -79,43 +88,20 @@
 
 
 <div id="data-modal" class="modal">
+    
     <div class="modal-content">
         <span class="close">&times;</span>
         <div>
-            <table>
-                <thead>
-                    <tr>
-                        <td class="table-title">Application Item</td>
-                        <td class="table-title">Value</td>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td class="modal-item-label">Name</td>
-                        <td class="modal-item-val" id="modal-name"></td>
-                    </tr>
-                    <tr>
-                        <td class="modal-item-label">Phone Number</td>
-                        <td class="modal-item-val" id="modal-phoneNumber"></td>
-                    </tr>
-                    <tr>
-                        <td class="modal-item-label">Position Applied For</td>
-                        <td class="modal-item-val" id="modal-position"></td>
-                    </tr>
-                    <tr>
-                        <td class="modal-item-label">Strengths</td>
-                        <td class="modal-item-val" id="modal-strengths"></td>
-                    </tr>
-                    <tr>
-                        <td class="modal-item-label">Why Here?</td>
-                        <td class="modal-item-val" id="modal-why"></td>
-                    </tr>
-                    <tr>
-                        <td class="modal-item-label">Resume Download</td>
-                        <td class="modal-item-val" id="modal-resume"><a id="resume-download" href="" download>Download Resume</a></td>
-                    </tr>
-                </tbody>
-            </table>
+            @if (Model.LoggedIn)
+            {
+                <form asp-action="Products">
+
+                </form>
+            }
+            else {
+                <h1 class="header">In order to make a purchase, please <a asp-controller="Home" asp-action="Login">Login</a></h1>
+            }
+           
         </div>
     </div>
 

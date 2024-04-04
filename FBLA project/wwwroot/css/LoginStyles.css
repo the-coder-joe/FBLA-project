@@ -6,10 +6,10 @@
 }
 .control-label {
     color: white;
-    font-size: 30px;
+    font-size: 25px;
     text-align: center;
     width: 100%;
-    font-family: Cochin, Georgia, Times, Times New Roman, serif;
+    font-family: Georgia, Times, Times New Roman, serif;
 }
 
 .title {
@@ -57,4 +57,13 @@
         padding-top: 20px;
         text-align: center;
         color: white;
+    }
+
+    .field-validation-error {
+        color: #ff1010a0;
+        text-align: center;
+        display: block;
+        margin-top: -10px;
+        margin-bottom: 10px;
+        font-size: 14px;
     }
