@@ -37,3 +37,38 @@
         font-size: 40px;
     }
 }
+.about-container {
+    width: 50%;
+    float: left;
+    padding: 20px;
+    box-sizing: border-box;
+    max-width: 90%;
+    margin: 0 auto;
+}
+
+#aboutus {
+    text-align: center;
+}
+
+
+/*
+.carousel {
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+}
+
+
+
+    .slide.active {
+        display: block;
+    }
+
+img {
+    width: 100%;
+    height: auto;
+}
+
+    */
+
+
