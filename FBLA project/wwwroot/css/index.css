@@ -38,7 +38,7 @@
     }
 }
 .about-container {
-    width: 50%;
+    min-width: auto;
     float: left;
     padding: 20px;
     box-sizing: border-box;
@@ -62,8 +62,3 @@
     .slide.active {
         display: block;
     }
-
-
-
-
-
