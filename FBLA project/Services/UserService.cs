@@ -133,7 +133,8 @@ namespace FBLA_project
         {
             string encrptedUserData = File.ReadAllText(_path);
             if (string.IsNullOrEmpty(encrptedUserData)) { return null; }
-            string rawUserData = _userProtector.Unprotect(encrptedUserData);
+            //    string rawUserData = _userProtector.Unprotect(encrptedUserData);
+            var rawUserData = encrptedUserData;
             List<User>? users = JsonSerializer.Deserialize<List<User>>(rawUserData);
 
             return users;
@@ -142,7 +143,8 @@ namespace FBLA_project
         private static void setUsers(List<User> users)
         {
             string rawUserData = JsonSerializer.Serialize(users);
-            string encriptedUserData = _userProtector.Protect(rawUserData);
+           // string encriptedUserData = _userProtector.Protect(rawUserData);
+            var encriptedUserData = rawUserData;
             File.WriteAllText(_path, encriptedUserData);
 
         }

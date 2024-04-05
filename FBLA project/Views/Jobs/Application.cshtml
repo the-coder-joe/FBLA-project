@@ -41,26 +41,26 @@
         <div class="msg">@Model.Message</div>
     }
     <form class="application-form" asp-controller="Jobs" asp-action="Application" asp-route-id="@Model.Job.Id" method="post" enctype="multipart/form-data">
-        <div class="form-group" id="item-name">
+        <div class="zen-form-group" id="item-name">
             <label class="field" asp-for="Application.Name">
                 Name
             </label>
             <input class="form-input" asp-for="Application.Name" required />
         </div>
 
-        <div class="form-group" id="item-phone">
+        <div class="zen-form-group" id="item-phone">
             <label class="field" asp-for="Application.PhoneNumber">
                 Phone Number
             </label>
             <input class="form-input" asp-for="Application.PhoneNumber" required />
         </div>
 
-        <div class="form-group" id="item-strengths">
+        <div class="zen-form-group" id="item-strengths">
             <label class="field" asp-for="Application.Strengths">What would you consider to be your strengths?</label>
             <textarea class="form-input" asp-for="Application.Strengths" required></textarea>
         </div>
 
-        <div class="form-group" id="item-why">
+        <div class="zen-form-group" id="item-why">
             <label class="field" asp-for="Application.WhyThisJob">Why would you like to apply here? </label>
             <textarea class="form-input" asp-for="Application.WhyThisJob" required></textarea>
         </div>

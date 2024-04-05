@@ -7,21 +7,21 @@
 @section Styles {
 <link rel="stylesheet" href ="/css/LoginStyles.css">
 }
-<h1 class="title">Admin Login</h1>
+<h1 class="title">Login</h1>
 
-@using (Html.BeginForm("Login", "Home", FormMethod.Post, new { @class = "form-group", role = "form" }))
+@using (Html.BeginForm("Login", "Home", FormMethod.Post, new { @class = "zen-form-group", role = "form" }))
 {
     @Html.AntiForgeryToken()
 
 
-        @Html.LabelFor(m => m.Username, new { @class = "control-label col-md-2" })
+        @Html.LabelFor(m => m.Username, new { @class = "zen-label col-md-2" })
         <div class="">
             @Html.TextBoxFor(m => m.Username, new { @class = "form-input" })
             @Html.ValidationMessageFor(m => m.Username)
         </div>
 
 
-        @Html.LabelFor(m => m.Password, new { @class = "control-label col-md-2" })
+        @Html.LabelFor(m => m.Password, new { @class = "zen-label col-md-2" })
         <div class="">
             @Html.PasswordFor(m => m.Password, new { @class = "form-input" })
             @Html.ValidationMessageFor(m => m.Password)

@@ -15,6 +15,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <_ContentIncludedByDefault Remove="wwwroot\css\MyGarageStyles.css" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="JobFolder\Resumes\" />
     <Folder Include="Private\" />
   </ItemGroup>

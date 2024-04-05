@@ -1,10 +1,20 @@
-﻿namespace FBLA_project
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace FBLA_project
 {
     public class Car
     {
-        public string Make { get; set; }
-        public string Model { get; set; }
-        public string Color { get; set; }
-        public string LicensePlate { get; set; }
+        [Required]
+        [Display(Name = "Make")]
+        public required string Make { get; set; }
+        [Required]
+        [Display(Name = "Model")]
+        public required string Model { get; set; }
+        [Required]
+        [Display(Name = "Color")]
+        public required string Color { get; set; }
+         [Required]
+        [Display(Name = "LicensePlate")]
+        public required string LicensePlate { get; set; }
     }
 }
