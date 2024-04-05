@@ -30,6 +30,7 @@ body {
     margin-bottom: 60px;
     color-scheme: dark;
     font-family: Georgia, 'Times New Roman', Times, serif, Times, serif;
+    color: white;
 }
 
 nav {
@@ -38,6 +39,11 @@ nav {
 
 main {
     padding-top: 60px;
+    color: white;
+}
+
+#mail {
+    min-width: 100%
 }
 
 .logo-image {
@@ -68,3 +74,4 @@ h1, p, h2, ul {
     color: white;
     font-family: Georgia, 'Times New Roman', Times, serif, Times, serif;
 }
+
