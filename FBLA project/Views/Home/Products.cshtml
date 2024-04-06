@@ -20,6 +20,8 @@
     <script>alert("Purchase Successful")</script>
 }
 
+
+
 <h1 class="title">Products</h1>
 
 <div class="card-deck big-box">
@@ -93,26 +95,27 @@
     <div class="card card-sizer">
         <div class="card-title">
             <h5 class="wash-title">Membership</h5>
-            <h6 class="price">$20</h6>
+            <h6 class="price">$30</h6>
         </div>
         <div class="card-body">
-            <p class="card-text">This is for mnem===njkfjdlksjaflkdsa</p>
+            <p class="card-text">It's our award winning touchless car wash, but up to 5 uses per day! All for the low low price of $30 per month!</p>
+            
         </div>
-        <img class="card-img-bottom" src="~/Images/Manual-istock.webp" />
+        <button class="membership-btn" onclick="openMembershipDisplay('touchless');">Purchase our car wash</button>
     </div>
 
     <div class="card card-sizer">
         <div class="card-title">
             <h5 class="wash-title">Membership</h5>
-            <h6 class="price">$20</h6>
+            <h6 class="price">$30</h6>
         </div>
         <div class="card-body">
             <p class="card-text">
-                This is for mnem===njkfjdlksjaflkdsa
-                <button id="myBtn">Purchase</button>
+                It's our award winning soft touch car wash, but up to 5 uses per day! All for the low low price of $35 per month!
+                
             </p>
         </div>
-        <img class="card-img-bottom" src="~/Images/Manual-istock.webp" />
+        <button class="membership-btn" onclick="openMembershipDisplay('soft-touch');">Purchase our car wash</button>
     </div>
 
 
@@ -123,12 +126,41 @@
 <div id="data-modal" class="modal">
 
     <div class="modal-content">
-        <span class="close">&times;</span>
+        <button class="btn-close" onclick="closeModal();"></button>
         <div>
             @if (Model.LoggedIn)
             {
-                <form asp-action="Products">
-                </form>
+                @using (Html.BeginForm("Products", "Home", FormMethod.Post, new { @class = "zen-form-group", role = "form" }))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.HiddenFor(m => m.MembershipType, new { @class = "form-input", id = "membership-type" })
+
+
+                    @Html.LabelFor(m => m.Car.Make, new { @class = "zen-label col-md-2", id = "membership-type" })
+                    <div class="">
+                        @Html.TextBoxFor(m => m.Car.Make, new { @class = "form-input" })
+                        @Html.ValidationMessageFor(m => m.Car.Make)
+                    </div>
+
+                    @Html.LabelFor(m => m.Car.Model, new { @class = "zen-label col-md-2", id = "membership-type" })
+                    <div class="">
+                        @Html.TextBoxFor(m => m.Car.Model, new { @class = "form-input" })
+                        @Html.ValidationMessageFor(m => m.Car.Model)
+                    </div>
+
+                    @Html.LabelFor(m => m.Car.Color, new { @class = "zen-label col-md-2", id = "membership-type" })
+                    <div class="">
+                        @Html.TextBoxFor(m => m.Car.Color, new { @class = "form-input" })
+                        @Html.ValidationMessageFor(m => m.Car.Color)
+                    </div>
+
+                    @Html.LabelFor(m => m.Car.LicensePlate, new { @class = "zen-label col-md-2", id = "membership-type" })
+                    <div class="">
+                        @Html.TextBoxFor(m => m.Car.LicensePlate, new { @class = "form-input" })
+                        @Html.ValidationMessageFor(m => m.Car.LicensePlate)
+                    </div>
+                    <input type="submit" value="Submit" class="submit" class="btn-default" style="background-color: green;" />
+                }
             }
             else
             {
@@ -139,3 +171,4 @@
     </div>
 
 </div>
+

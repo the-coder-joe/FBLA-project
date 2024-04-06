@@ -1,9 +1,47 @@
 ﻿@model FBLA_project.MyGarageModel
 
-@if(Model?.UnprotectedData is not null)
-{
-    <h1>Hello, @(Model.Name)</h1>
+@section Scripts {
+    <link rel="stylesheet" href="/css/MyGarageStyles.css" />
 }
 
+@if (Model.LoggedIn)
+{
+    <h1 class="greeting">Hello, @(Model.Name)</h1>
+    
 
+    if (Model.Memberships is not null)
+    {
+        <h2 class="greeting-info">You have @Model.Memberships.Count memberships</h2>
+        <div class="membership-section">
+        @foreach (var membership in Model.Memberships)
+        {
+            <div class="membership-display">
+                <div>
+                    @membership.MembershipType
+                </div>
+                <div class="vehicle-display">
+                    <div>
+                        <span style="font-size: 20px;">Car</span>
+                        <span class="car-property">@membership.Car.Color</span>
+                        <span class="car-property">@membership.Car.Make</span>
+                        <span class="car-property">@membership.Car.Model</span>
+                        <span class="car-property">With the Lisence Plate Number</span>
+                        <span class="car-property">@membership.Car.LicensePlate</span>
+                    </div>
+                </div>
+            </div>
+        }
+        </div>
+    }
+    else
+    {
+        <h2 class="greeting-info">You have no memberships, to buy a membership
+            <br />
+            <a asp-action="Products" asp-controller="Home">Click Here</a></h2>
+    }
 
+}
+else
+{
+    <h1 class="title">Please log in to see your membership information.  <a asp-action="Login" asp-controller="Home">Log In</a></h1>
+}

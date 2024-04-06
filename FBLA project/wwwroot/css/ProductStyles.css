@@ -9,6 +9,7 @@ h1, h2, h3, p {
     margin: 20px;
 }
 
+
 .card-title {
     display: flex;
     flex-wrap: wrap;
@@ -35,12 +36,14 @@ h1, h2, h3, p {
     border: 2px solid white;
     border-radius: 15px;
     overflow: hidden;
+    min-width: 20rem;
+    margin: 10px;
 }
 
 .big-box {
     display: flex;
     flex-direction: row;
-    flex-wrap: nowrap;
+    flex-wrap: wrap;
     align-content: space-between;
     justify-content: space-evenly;
 }
@@ -77,28 +80,30 @@ h1, h2, h3, p {
     overflow: auto; /* Enable scroll if needed */
     background-color: rgb(0,0,0); /* Fallback color */
     background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    
 }
 
 /* Modal Content/Box */
 .modal-content {
     background-color: rgb(30, 30, 30);
-    margin: 15% auto; /* 15% from the top and centered */
+    margin: 200px auto; /* 15% from the top and centered */
     padding: 20px;
     border: 1px solid #888;
     color: white;
+    width: 85%;
 }
 
 /* The Close Button */
-.close {
+.btn-close {
     color: #aaa;
     float: right;
-    font-size: 28px;
+    font-size: 22px;
     font-weight: bold;
 }
 
-    .close:hover,
-    .close:focus {
-        color: black;
+    .btn-close:hover,
+    .btn-close:focus {
+        color: darkgrey;
         text-decoration: none;
         cursor: pointer;
     }
@@ -125,3 +130,23 @@ table {
 .table-title {
     font-size: 24px;
 }
+
+.membership-btn {
+    display: inline-block;
+    width: 100%;
+    margin:0;
+    border:none;
+    background-color: var(--zen-pink);
+    padding: 30px;
+    text-align: center;
+    color: white;
+    text-decoration: none;
+    transition: all 0.2s;
+    font-size: 22px;
+}
+
+    .membership-btn:hover {
+        color: black;
+        background-color: var(--zen-purple);
+        font-size: 24px;
+    }

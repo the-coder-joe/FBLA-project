@@ -1,12 +1,13 @@
-﻿using System.Security.Policy;
+﻿using System.ComponentModel.DataAnnotations;
+using System.Security.Policy;
 
 namespace FBLA_project
 {
     public class Membership
     {
-        public string Name { get; set; }
-        public string Description { get; set; }
-        public Car Car { get; set; }
+        [Required]
+        public required string MembershipType { get; set; }
+        public required Car Car { get; set; }
 
     }
 }
