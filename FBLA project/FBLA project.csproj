@@ -8,7 +8,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="UserFolder\**" />
+    <Content Remove="UserFolder\**" />
+    <EmbeddedResource Remove="UserFolder\**" />
+    <None Remove="UserFolder\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="JobFolder\Resumes\" />
+    <Folder Include="Private\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -17,6 +25,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Session" Version="2.2.0" />
   </ItemGroup>
 
 </Project>

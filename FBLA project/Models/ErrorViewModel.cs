@@ -1,6 +1,6 @@
 namespace FBLA_project.Models
 {
-    public class ErrorViewModel
+    public class ErrorViewModel : BaseModel
     {
         public string? RequestId { get; set; }
 

@@ -2,7 +2,7 @@
 
 namespace FBLA_project
 {
-    public class LoginModel
+    public class LoginModel : BaseModel
     {
         [Required]
         [Display(Name = "Username")]
@@ -12,5 +12,7 @@ namespace FBLA_project
         [DataType(DataType.Password)]
         [Display(Name = "Password")]
         public required string Password { get; set; }
+
+        public string? Message = null;
     }
 }

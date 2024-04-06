@@ -1,8 +1,55 @@
 ﻿body {
 }
 
-.job-application-table {
+h1, h5, h3, p {
+    color: white
 }
+
+h1, h2, h3, p {
+    margin: 20px;
+}
+
+.card-title {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: space-between;
+    align-content: stretch;
+    align-items: center;
+    padding: 15px;
+    background-color: var(--zen-pink);
+    margin: 0;
+}
+
+.wash-tile, .price {
+    display: inline-block;
+}
+
+.price {
+    color: rgb(202 202 202);
+}
+
+.card-sizer {
+    width: 22rem;
+    background-color: rgb(144, 98, 98, 0.08);
+    border: 2px solid white;
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+.big-box {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-content: space-between;
+    justify-content: space-evenly;
+}
+
+.card-body {
+    padding: 0px 5px 20px 5px;
+    padding-top: 0;
+}
+
 
 .modal-open {
     text-decoration: none;
@@ -28,7 +75,7 @@
     width: 100%; /* Full width */
     height: 100%; /* Full height */
     overflow: auto; /* Enable scroll if needed */
-    background-color: rgb(0,0,0); /* Fallback color */ 
+    background-color: rgb(0,0,0); /* Fallback color */
     background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
 }
 

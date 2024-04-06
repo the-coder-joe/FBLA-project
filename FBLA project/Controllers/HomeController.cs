@@ -1,23 +1,58 @@
 using FBLA_project.Models;
+using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Diagnostics;
+using Microsoft.Extensions.FileProviders;
 using System.Diagnostics;
+using System.Security.Permissions;
 using System.Text.Json;
 
 namespace FBLA_project
 {
-    public class HomeController() : Controller
+    public class HomeController : Controller
     {
         private const string jobDirectory = @".\JobFolder";
-        protected bool _authenticated = false;
 
         public IActionResult Index()
         {
-            return View();
+            User? user = UserService.GetUserFromHttpContext(HttpContext);
+
+            if (user is null)
+            {
+                return View();
+            }
+
+            return View(new BaseModel { UnprotectedData = user.UnprotectedInfo });
         }
 
-        public ActionResult Products()
+        public IActionResult Products()
         {
-            return View();
+            User? user = UserService.GetUserFromHttpContext(HttpContext);
+            if (user is null)
+            { return View(new ProductsModel()); }
+
+            return View(new ProductsModel { UnprotectedData = user.UnprotectedInfo, LoginRequired = false, PurchaseSuccessful = false }); 
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Products(ProductsModel model)
+        {
+            if(ModelState.IsValid)
+            {
+                User? user= UserService.GetUserFromHttpContext(HttpContext);
+                if (user is null)
+                {
+                    return View(new ProductsModel { LoginRequired = true });
+                }
+
+                user.UnprotectedInfo.Membership = model.Membership;
+                UserService.ModifyUser(user.Id, user);
+                model.PurchaseSuccessful = true;
+                model.UnprotectedData = user.UnprotectedInfo;
+                return View(model);
+            }
+            return View(model);
         }
 
         #region AdminLogin
@@ -25,7 +60,20 @@ namespace FBLA_project
         //distributes actual login page
         public ActionResult Login()
         {
-            return View();
+            User? user = UserService.GetUserFromHttpContext(HttpContext);
+            if (user is null)
+            { return View(); }
+
+            return RedirectToAction("Index", "Account");
+        }
+
+        public IActionResult Account()
+        {
+            User? user = UserService.GetUserFromHttpContext(HttpContext);
+            if (user is null)
+            { return View(); }
+
+            return View(new BaseModel { UnprotectedData = user.UnprotectedInfo });
         }
 
         //handles form submission
@@ -35,43 +83,54 @@ namespace FBLA_project
         {
             if (ModelState.IsValid)
             {
-                //generate list of known admins
-                List<Admin> admins;
-                using (StreamReader jsonStream = new(Path.Combine(jobDirectory, "AdminPasswords.json")))
+                User? user = null;
+                try
                 {
-                    string jsonString = jsonStream.ReadToEnd();
-                    admins = JsonSerializer.Deserialize<List<Admin>>(jsonString) ?? throw new Exception("Server Error");
+                    user = UserService.AuthenticateUser(model.Username, model.Password);
                 }
-
-                Admin? admin = null;
-                foreach (Admin ad in admins)
+                catch (Exception ex)
                 {
-                    if (ad.username == model.Username)
+                    if (ex.Message == "User does not exist")
                     {
-                        admin = ad;
+                        model.Message = "This user does not exist, please create an account.";
                     }
                 }
-
-
-                //check if the username and password match
-                if ((admin is not null)  && admin.password == model.Password)
-                { 
-                    this._authenticated = true;
-                    //if they match, take you to the admin view page
-                    return RedirectToAction("AdminView", "Home");
+                if (user is null)
+                {
+                    model.Message = "Your password is incorrect";
+                    return View(model);
                 }
+
+                if (user.ProtectedInfo.IsAdmin)
+                {
+                    return RedirectToAction("Index", "Home");
+                }
+
+                var token = UserService.GenerateSessionToken(user);
+
+                //add the session token validation
+
+                HttpContext.Session.SetString("SessionToken", token);
+
+                return RedirectToAction("AdminView", "Home");
             }
-            ModelState.AddModelError("", "Invalid login attempt.");
-            return View(model);
+            return View();
+        }
+
+        public IActionResult Logout()
+        {
+            HttpContext.Session.Clear();
+            return RedirectToAction("Index");
         }
 
         public IActionResult AdminView()
         {
-            //double check if the authentication has taken place on the prior page
-            if (this._authenticated)
+            User? user = UserService.GetUserFromHttpContext(HttpContext);
+            if (user is null)
+            { return RedirectToAction("Index", "Home"); }
+
+            if (user.ProtectedInfo.IsAdmin)
             {
-                //make sure that the authentication is immediatly killed
-                this._authenticated = false;
                 List<ProcessedApplication> apps = [];
 
                 //read the applications from file
@@ -90,9 +149,44 @@ namespace FBLA_project
 
         #endregion AdminLogin
 
-        public IActionResult Privacy()
+        public IActionResult MyGarage()
+        {
+
+            return View();
+        }
+
+        public IActionResult CreateAccount()
         {
             return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult CreateAccount(AccountCreationModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                //verify password is valid
+                if (model.Password == model.ConfirmPassword)
+                {
+                    UnprotectedData userInfo = model.UnprotectedInfo;
+                    ProtectedData protectedData = new ProtectedData
+                    {
+                        IsAdmin = false,
+                        Password = model.Password
+                    };
+
+                    UserService.CreateNewUser(protectedData, userInfo);
+                    model.Message = "Account has successfully been created";
+                    Response.Headers.Append("REFRESH", "1;URL=/Home/Login");
+
+                    return View(model);
+                }
+
+
+            }
+            model.Message = "Something Went Wrong";
+            return View(model);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

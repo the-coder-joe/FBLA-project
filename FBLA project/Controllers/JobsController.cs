@@ -207,14 +207,21 @@ namespace FBLA_project.Controllers
 
         public IActionResult Information()
         {
-            return View();
+            User? user = UserService.GetUserFromHttpContext(HttpContext);
+            if (user is null)
+            { return View(); }
+
+            return View(new BaseModel { UnprotectedData = user.UnprotectedInfo });
         }
 
         public IActionResult Openings()
         {
+            User? user = UserService.GetUserFromHttpContext(HttpContext);
+
             OpeningsModel model = new()
             {
-                Openings = this.openingsData ?? []
+                Openings = this.openingsData ?? [],
+                UnprotectedData = user?.UnprotectedInfo
             };
 
             return View(model);
