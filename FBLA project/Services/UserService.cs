@@ -14,13 +14,13 @@ namespace FBLA_project
         private static readonly string _sessionTokenKey = "Session Token Key";
         private static readonly string _userStoragekey = "User Storage Key";
 
-        private static readonly IDataProtector _sessionTokenProtector;
+
         private static readonly IDataProtector _userProtector;
 
+        private static Dictionary<string, string> _activeSessionTokens = new Dictionary<string, string>();
         static UserService()
         {
             _dataProtectionProvider = DataProtectionProvider.Create("ApplicationName");
-            _sessionTokenProtector = _dataProtectionProvider.CreateProtector(_sessionTokenKey);
             _userProtector = _dataProtectionProvider.CreateProtector(_userStoragekey);
         }
         public static User? AuthenticateUser(string username, string password)
@@ -43,10 +43,10 @@ namespace FBLA_project
 
         public static string GenerateSessionToken(User user)
         {
-            string userData = JsonSerializer.Serialize<User>(user);
+            string id = user.Id.ToString();
+            string token = GenerateRandomBytes(10);
 
-            string token = _sessionTokenProtector.Protect(userData);
-
+            _activeSessionTokens.Add(token, id);
             return token;
         }
 
@@ -54,21 +54,20 @@ namespace FBLA_project
         {
             string? token = httpContext.Session.GetString("SessionToken");
 
-            if (token == null)
+            if (token is null)
             {
                 return null;
             }
-
-            string userData = _sessionTokenProtector.Unprotect(token);
-
-            User? user = JsonSerializer.Deserialize<User>(userData);
-
-            if (user is null)
+            string? userid;
+            if(_activeSessionTokens.TryGetValue(token, out userid))
             {
-                return null;
+                if(userid is not null)
+                {
+                    User? user = GetUserById(userid);
+                    return user;
+                }
             }
-
-            return user;
+            return null;
         }
 
         public static void CreateNewUser(ProtectedData protectedData, UnprotectedData unprotected)
@@ -87,7 +86,7 @@ namespace FBLA_project
             setUsers(users);
         }
 
-        public static void ModifyUser(int userId, User newUser)
+        public static void ModifyUser(string userId, User newUser)
         {
             List<User>? users = getUsers();
             if(users is null)
@@ -106,7 +105,7 @@ namespace FBLA_project
             }
         }
 
-        public static int? GetUserIdByUsername(string username)
+        public static string? GetUserIdByUsername(string username)
         {
             var users = getUsers();
             if (users == null) return null;
@@ -117,9 +116,11 @@ namespace FBLA_project
             return null;
         }
 
-        public static User? GetUserById(int id)
+        public static User? GetUserById(string id)
         {
             var users = getUsers();
+            if(users is null) { return null; }
+
             foreach (User user in users)
             {
                 if (user.Id == id)
@@ -148,7 +149,7 @@ namespace FBLA_project
             File.WriteAllText(_path, encriptedUserData);
 
         }
-        private static int GenerateUserId()
+        private static string GenerateUserId()
         {
             byte[] randomBytes = new byte[sizeof(Int16)];
             using (RandomNumberGenerator rng = RandomNumberGenerator.Create())
@@ -156,7 +157,7 @@ namespace FBLA_project
                 rng.GetBytes(randomBytes);
             }
 
-            return BitConverter.ToInt16(randomBytes);
+            return BitConverter.ToInt16(randomBytes).ToString();
 
         }
 
@@ -165,6 +166,17 @@ namespace FBLA_project
             var hashingAlgorithm = System.Security.Cryptography.SHA512.Create();
             int iterations = 1000;
             return false;
+        }
+
+        private static string GenerateRandomBytes(int numBytes)
+        {
+            byte[] randomBytes = new byte[numBytes];
+            using (RandomNumberGenerator rng = RandomNumberGenerator.Create())
+            {
+                rng.GetBytes(randomBytes);
+            }
+
+            return Convert.ToBase64String(randomBytes);
         }
     }
 }
