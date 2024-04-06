@@ -9,6 +9,7 @@
     height: 80vh;
     object-position: 50% 100%;
     object-fit: cover;
+    border-bottom: 1px solid rgb(197 129 123);
 }
 
 .title-container {
@@ -36,4 +37,54 @@
         color: rgb(127 65 137);
         font-size: 40px;
     }
+}
+.about-container {
+    min-width: 40rem;
+    padding: 20px;
+    max-width: 50%;
+
+
+}
+
+#home-carousel {
+    width: 500px;
+    margin-inline: 20px;
+    border-radius:20px;
+}
+
+#aboutus {
+    text-align: center;
+    margin-inline: 20px;
+}
+
+
+.carousel {
+    width: 50%;
+    overflow: hidden;
+    position: relative;
+}
+
+
+
+    .slide.active {
+        display: block;
+    }
+
+
+.information-container {
+    margin: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+
+.contact-container {
+    float: right;
+    width: 40%;
+}
+
+.footer {
+    display: flex;
 }

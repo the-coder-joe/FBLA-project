@@ -43,15 +43,35 @@ namespace FBLA_project
                 User? user= UserService.GetUserFromHttpContext(HttpContext);
                 if (user is null)
                 {
-                    return View(new ProductsModel { LoginRequired = true });
+                    return View(new ProductsModel { LoginRequired = true});
                 }
 
-                user.UnprotectedInfo.Membership = model.Membership;
+                if (model is null || ( model.MembershipType is null || model.Car is null))
+                {
+                    return View(new ProductsModel { PurchaseSuccessful = false }); 
+                }
+
+                var newMembership = new Membership
+                {
+                    Car = model.Car,
+                    MembershipType = model.MembershipType
+                };
+
+                if (user.UnprotectedInfo.Memberships is null)
+                {
+                    user.UnprotectedInfo.Memberships = new List<Membership> ();
+                }
+
+                user.UnprotectedInfo.Memberships.Add(newMembership);
                 UserService.ModifyUser(user.Id, user);
+
                 model.PurchaseSuccessful = true;
                 model.UnprotectedData = user.UnprotectedInfo;
+
                 return View(model);
             }
+            model.UnprotectedData = UserService.GetUserFromHttpContext(HttpContext)?.UnprotectedInfo;
+            model.BadRequest = true;
             return View(model);
         }
 
@@ -151,8 +171,12 @@ namespace FBLA_project
 
         public IActionResult MyGarage()
         {
+            User? user = UserService.GetUserFromHttpContext(HttpContext);
+            if (user is null)
+            { return View(new MyGarageModel() ); }
 
-            return View();
+            HttpContext.Response.Headers.Append("CACHE-CONTROL", "NO-CACHE");
+            return View(new MyGarageModel { UnprotectedData = user.UnprotectedInfo });
         }
 
         public IActionResult CreateAccount()
