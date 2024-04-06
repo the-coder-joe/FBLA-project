@@ -38,6 +38,7 @@ nav {
 
 main {
     padding-top: 60px;
+    min-height: 85vh;
 }
 
 .logo-image {
