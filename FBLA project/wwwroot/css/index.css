@@ -84,3 +84,7 @@
     float: right;
     width: 40%;
 }
+
+.footer {
+    display: flex;
+}

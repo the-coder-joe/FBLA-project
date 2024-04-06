@@ -175,6 +175,7 @@ namespace FBLA_project
             if (user is null)
             { return View(new MyGarageModel() ); }
 
+            HttpContext.Response.Headers.Append("CACHE-CONTROL", "NO-CACHE");
             return View(new MyGarageModel { UnprotectedData = user.UnprotectedInfo });
         }
 
