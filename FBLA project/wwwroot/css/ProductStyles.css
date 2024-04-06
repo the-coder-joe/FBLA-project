@@ -133,16 +133,18 @@ table {
 
 .membership-btn {
     display: inline-block;
-    width: 100%;
-    margin:0;
+    width: 80%;
+    margin:5px auto;
     border:none;
     background-color: var(--zen-pink);
-    padding: 30px;
+    padding: 20px;
     text-align: center;
     color: white;
     text-decoration: none;
     transition: all 0.2s;
     font-size: 22px;
+    border-radius: 40px;
+    margin-bottom: 15px;
 }
 
     .membership-btn:hover {
@@ -160,3 +162,12 @@ table {
     justify-content: space-between;
     align-self: stretch;
 }
+
+.membership-box > .card > .membership-btn, .membership-box > .card > .card-title {
+    background-color: var(--zen-purple);
+}
+
+    .membership-box > .card > .membership-btn:hover {
+        background: var(--zen-pink);
+        color: white;
+    }
