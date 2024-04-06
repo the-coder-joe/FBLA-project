@@ -12,6 +12,10 @@ namespace FBLA_project
             LoginRequired = false;
             PurchaseSuccessful = false;
         }
+        public bool BadRequest = false;
+        //for the new membership that will be purchased
+        public string? MembershipType { get; set; }
+        public Car? Car { get; set; }
 
     }
 }

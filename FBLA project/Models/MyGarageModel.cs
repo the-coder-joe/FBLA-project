@@ -2,6 +2,6 @@
     public class MyGarageModel : BaseModel
     {
         public string? Name { get { return UnprotectedData?.Name; } }
-        public Membership? Membership { get { return UnprotectedData?.Membership;  } }
+        public List<Membership>? Memberships { get { return UnprotectedData?.Memberships;  } }
     }
 }
