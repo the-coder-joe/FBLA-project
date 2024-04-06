@@ -9,6 +9,7 @@
     height: 80vh;
     object-position: 50% 100%;
     object-fit: cover;
+    border-bottom: 1px solid rgb(197 129 123);
 }
 
 .title-container {
@@ -38,20 +39,22 @@
     }
 }
 .about-container {
-    min-width: auto;
-    float: left;
+    min-width: 40rem;
     padding: 20px;
-    box-sizing: border-box;
-    max-width: 90%;
-    margin: 0 auto;
+    max-width: 50%;
+
+
 }
 
 #home-carousel {
-    width: 50%;
+    width: 500px;
+    margin-inline: 20px;
+    border-radius:20px;
 }
 
 #aboutus {
     text-align: center;
+    margin-inline: 20px;
 }
 
 
@@ -69,9 +72,11 @@
 
 
 .information-container {
+    margin: 20px;
     display: flex;
     flex-wrap: wrap;
     flex-direction: row;
+    justify-content: space-around;
 }
 
 
