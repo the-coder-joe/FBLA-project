@@ -144,3 +144,8 @@ h1, p, h2, ul {
     margin-bottom: 10px;
     font-size: 14px;
 }
+
+.footer {
+    display: flex;
+    justify-content: space-evenly;
+}
