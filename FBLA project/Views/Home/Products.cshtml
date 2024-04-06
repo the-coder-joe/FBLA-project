@@ -1,7 +1,7 @@
 ﻿@model FBLA_project.ProductsModel
 
 
-@section Scripts{
+@section Scripts {
     <script type="text/javascript" src="~/js/ProductsSripts.js"></script>
 }
 
@@ -10,12 +10,12 @@
     <link rel="stylesheet" href="~/css/ProductStyles.css" />
 }
 
-@if(Model.LoginRequired)
+@if (Model.LoginRequired)
 {
     <h1 class="header">It is required that you log in in order to make a purchase </h1>
 }
 
-@if(Model.PurchaseSuccessful)
+@if (Model.PurchaseSuccessful)
 {
     <script>alert("Purchase Successful")</script>
 }
@@ -29,7 +29,17 @@
             <h6 class="price">$7.99</h6>
         </div>
         <div class="card-body">
-            <p class="card-text">&nbsp;&nbsp;&nbsp;&nbsp; Our Soft Touch Car Wash is designed to give your vehicle a thorough yet gentle cleaning experience. Using state-of-the-art technology and premium cleaning solutions, this wash ensures a pristine finish without compromising the integrity of your vehicle's paint and surfaces.</p>
+            <p class="card-text">
+                <ul>
+                    <li>High-pressure water jets</li>
+                    <li>Gentle Foam</li>
+                    <li>Eco-friendly detergents</li>
+                    <li>Touchless drying</li>
+                    <li>Body wax</li>
+                    <li>Underbody flush</li>
+                    <li>Tire gloss</li>
+                </ul>
+            </p>
         </div>
         <img class="card-img-bottom" src="~/Images/Touchless-istock.webp" />
     </div>
@@ -41,7 +51,18 @@
         </div>
         <div class="card-body">
 
-            <p class="card-text">Indulge your vehicle in the pampering embrace of our Soft Touch Car Wash – an experience where cutting-edge technology meets gentle care. This advanced wash is designed to provide your vehicle with a thorough cleansing, ensuring a pristine finish without compromising its exterior integrity.</p>
+            <p class="card-text">
+                <ul>
+                    <li>Soft cloth scrub</li>
+                    <li>High-pressure water jets</li>
+                    <li>Gentle Foam</li>
+                    <li>Eco-friendly detergents</li>
+                    <li>Touchless drying</li>
+                    <li>Body wax</li>
+                    <li>Underbody flush</li>
+                    <li>Tire gloss</li>
+                </ul>
+            </p>
 
         </div>
         <img class="card-img-bottom" src="~/Images/SoftTouch-istock.webp" />
@@ -53,21 +74,21 @@
             <h6 class="price">$19.99</h6>
         </div>
         <div class="card-body">
-            <p class="card-text">Immerse your vehicle in a distinctive and personalized cleaning affair with our Human-Powered Car Wash – a one-of-a-kind experience where skilled hands replace automated machinery to treat your car to a meticulous and artisanal cleaning.</p>
+            <p class="card-text">
+                <ul>
+                    <li>High pressure rinse</li>
+                    <li>Full body soap scrub</li>
+                    <li>Window cleaning</li>
+                    <li>Bug removal</li>
+                    <li>Rim and tire cleaning</li>
+                    <li>Tire gloss</li>
+                    <li>Microfiber towel drying</li>
+                    <li>Body wax</li>
+                </ul>All operations done by employees to ensure that no part of your vehicle is left uclean!
+            </p>
         </div>
         <img class="card-img-bottom" src="~/Images/Manual-istock.webp" />
     </div>
-
-   <div class="card card-sizer">
-    <div class="card-title">
-        <h5 class="wash-title">Membership</h5>
-        <h6 class="price">$20</h6>
-    </div>
-    <div class="card-body">
-        <p class="card-text">This is for mnem===njkfjdlksjaflkdsa</p>
-    </div>
-    <img class="card-img-bottom" src="~/Images/Manual-istock.webp" />
-</div>
 
     <div class="card card-sizer">
         <div class="card-title">
@@ -75,7 +96,19 @@
             <h6 class="price">$20</h6>
         </div>
         <div class="card-body">
-            <p class="card-text">This is for mnem===njkfjdlksjaflkdsa
+            <p class="card-text">This is for mnem===njkfjdlksjaflkdsa</p>
+        </div>
+        <img class="card-img-bottom" src="~/Images/Manual-istock.webp" />
+    </div>
+
+    <div class="card card-sizer">
+        <div class="card-title">
+            <h5 class="wash-title">Membership</h5>
+            <h6 class="price">$20</h6>
+        </div>
+        <div class="card-body">
+            <p class="card-text">
+                This is for mnem===njkfjdlksjaflkdsa
                 <button id="myBtn">Purchase</button>
             </p>
         </div>
@@ -88,20 +121,20 @@
 
 
 <div id="data-modal" class="modal">
-    
+
     <div class="modal-content">
         <span class="close">&times;</span>
         <div>
             @if (Model.LoggedIn)
             {
                 <form asp-action="Products">
-
                 </form>
             }
-            else {
+            else
+            {
                 <h1 class="header">In order to make a purchase, please <a asp-controller="Home" asp-action="Login">Login</a></h1>
             }
-           
+
         </div>
     </div>
 
