@@ -96,6 +96,12 @@
     }
 }
 
-.bbtc {
-    margin:0 auto;
+.back-to-top-container {
+    display: flex;
+    justify-content: center; 
+    align-items: center; 
+}
+
+#reasons {
+    scroll-margin: 10em;
 }
