@@ -91,9 +91,9 @@ namespace FBLA_project
         {
             User? user = UserService.GetUserFromHttpContext(HttpContext);
             if (user is null)
-            { return View(); }
+            { return View(new BaseModel()); }
 
-            return View(new BaseModel { UnprotectedData = user.UnprotectedInfo });
+            return View(new AccountModel { UnprotectedData = user.UnprotectedInfo });
         }
 
         //handles form submission
