@@ -1,1 +1,1 @@
-[{"Id":"-31652","ProtectedInfo":{"Password":"jim","IsAdmin":false},"UnprotectedInfo":{"Username":"jim","Email":"jim","Gender":"jim","Name":"jimmy","Memberships":[{"MembershipType":"touchless","Car":{"Make":"toyota","Model":"camry","Color":"red ","LicensePlate":"1123"}}]}}]
+[{"Id":"-31652","ProtectedInfo":{"Password":"jim","IsAdmin":true},"UnprotectedInfo":{"Username":"jim","Email":"jim","Gender":"jim","Name":"jimmy","Memberships":[{"MembershipType":"touchless","Car":{"Make":"toyota","Model":"camry","Color":"red ","LicensePlate":"1123"}}]}}]

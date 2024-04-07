@@ -84,14 +84,14 @@ namespace FBLA_project
             if (user is null)
             { return View(); }
 
-            return RedirectToAction("Index", "Account");
+            return RedirectToAction("Account", "Home");
         }
 
         public IActionResult Account()
         {
             User? user = UserService.GetUserFromHttpContext(HttpContext);
             if (user is null)
-            { return View(new BaseModel()); }
+            { return RedirectToAction("Home", "Login"); }
 
             return View(new AccountModel { UnprotectedData = user.UnprotectedInfo });
         }
@@ -121,18 +121,14 @@ namespace FBLA_project
                     return View(model);
                 }
 
-                if (user.ProtectedInfo.IsAdmin)
-                {
-                    return RedirectToAction("Index", "Home");
-                }
-
                 var token = UserService.GenerateSessionToken(user);
-
-                //add the session token validation
-
                 HttpContext.Session.SetString("SessionToken", token);
 
-                return RedirectToAction("AdminView", "Home");
+                if (user.ProtectedInfo.IsAdmin)
+                {
+                    return RedirectToAction("AdminView", "Home");
+                }
+                return RedirectToAction("Account", "Home");
             }
             return View();
         }
