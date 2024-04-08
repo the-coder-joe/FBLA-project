@@ -1,7 +1,5 @@
 ﻿.user-info-container {
-    display:inline-flex;
-    width: 80%;
-    margin: 0 auto;
+    display:flex;
     justify-content:center;
 
 }
