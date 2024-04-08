@@ -27,6 +27,7 @@
     background: #4a90e2;
     color: white;
     font-size: 30px;
+    transition: all 0.4s;
 }
 
     .login:hover {
