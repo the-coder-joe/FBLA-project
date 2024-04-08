@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System.Numerics;
 using System.Text.Json;
 
 namespace FBLA_project.Controllers
@@ -156,52 +157,57 @@ namespace FBLA_project.Controllers
             return Redirect("/");
         }
 
-        public IActionResult Application(string? id, ApplicationModel? returnModel)
+        public IActionResult Application(string? id)
         {
             if (id == null) { return RedirectToAction("Openings"); }
 
             Job job = this.openingsData.Find(x => x.Id == id) ?? throw new Exception("Job not found");
 
             ApplicationModel model;
-            string message = "";
-            bool complete = false;
-            if (Request.Method == "POST")
-            {
-                //post request - form submitted
-                if (returnModel is null)
-                    throw new Exception("No return Model");
 
-                try
-                {
-                    ProcessApplication(returnModel.Application, returnModel.ResumeFile, job);
-                    complete = true;
-                }
-                catch (Exception e)
-                {
-                    message = e.Message;
-                    complete = false;
-                }
-
-                //construct the new model for returning
-                model = new ApplicationModel()
-                {
-                    Job = job,
-                    Message = message,
-                    Completed = complete,
-                };
-            }
-            else
-            {
-                //get request - normal
                 model = new ApplicationModel()
                 {
                     Job = job,
                     Completed = false
                 };
+            return View(model);
+        }
+
+        [ValidateAntiForgeryToken]
+        [HttpPost]
+        public IActionResult Application(string? id, ApplicationModel returnModel)
+        {
+            Job job = this.openingsData.Find(x => x.Id == id) ?? throw new Exception("Job not found");
+
+            if (returnModel is null)
+                throw new Exception("No return Model");
+
+            ApplicationModel model;
+            string message = "";
+            bool complete = false;
+
+            try
+            {
+                ProcessApplication(returnModel.Application, returnModel.ResumeFile, job);
+                complete = true;
             }
+            catch (Exception e)
+            {
+                message = e.Message;
+                complete = false;
+            }
+
+            //construct the new model for returning
+            model = new ApplicationModel()
+            {
+                Job = job,
+                Message = message,
+                Completed = complete,
+            };
 
             return View(model);
         }
+
 
         #region staticWebsites
 
