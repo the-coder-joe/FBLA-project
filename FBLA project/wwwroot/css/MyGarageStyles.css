@@ -19,3 +19,18 @@
     text-align: center;
 }
 
+.login {
+    text-decoration: none;
+    border: 1px solid white;
+    border-radius: 60px;
+    padding: 20px;
+    background: #4a90e2;
+    color: white;
+    font-size: 30px;
+}
+
+    .login:hover {
+        color: azure;
+        background-color: var(--zen-purple);
+        font-size: 35px;
+    }
