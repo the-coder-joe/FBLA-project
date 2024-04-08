@@ -190,13 +190,8 @@ namespace FBLA_project
                 if (model.Password == model.ConfirmPassword)
                 {
                     UnprotectedData userInfo = model.UnprotectedInfo;
-                    ProtectedData protectedData = new ProtectedData
-                    {
-                        IsAdmin = false,
-                        Password = model.Password
-                    };
 
-                    UserService.CreateNewUser(protectedData, userInfo);
+                    UserService.CreateNewUser(model.Password, userInfo);
                     model.Message = "Account has successfully been created";
                     Response.Headers.Append("REFRESH", "1;URL=/Home/Login");
 
