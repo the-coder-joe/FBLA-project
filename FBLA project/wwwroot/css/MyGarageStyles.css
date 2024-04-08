@@ -47,3 +47,10 @@
     display: flex;
     justify-content: center;
 }
+
+.car-title {
+    color: lightblue;
+    font-weight: 600;
+    font-size: 24px;
+    margin-inline: 10px;
+}

@@ -28,12 +28,11 @@
                 </div>
                 <div class="vehicle-display">
                     <div>
-                        <span style="font-size: 20px;">Car</span>
-                        <span class="car-property">@membership.Car.Color</span>
-                        <span class="car-property">@membership.Car.Make</span>
-                        <span class="car-property">@membership.Car.Model</span>
-                        <span class="car-property">With the Lisence Plate Number</span>
-                        <span class="car-property">@membership.Car.LicensePlate</span>
+                        <span class="car-title">Car:</span>
+                        <span class="car-property">Color: @membership.Car.Color</span>
+                        <span class="car-property">Make: @membership.Car.Make</span>
+                        <span class="car-property">Model: @membership.Car.Model</span>
+                        <span class="car-property">License Plate: @membership.Car.LicensePlate</span>
                     </div>
                 </div>
             </div>
@@ -51,5 +50,8 @@
 else
 {
     <h1 class="title">My Garage</h1>
-    <h3 style="text-align:center; color: white;">Please log in to see your membership information.  <a asp-action="Login" asp-controller="Home" class="login">Log In</a></h3>
+    <h3 style="text-align:center; color: white;">Please log in to see your membership information.  </h3>
+    <div style="display:flex; justify-content:center;">
+        <a asp-action="Login" asp-controller="Home" class="login">Log In</a>
+    </div>
 }
