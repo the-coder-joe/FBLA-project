@@ -5,6 +5,13 @@
 .membership-display {
     color: white;
     font-size: 22px;
+    border: 1px solid white;
+    margin: 10px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 20px;
 }
 
 .greeting {
