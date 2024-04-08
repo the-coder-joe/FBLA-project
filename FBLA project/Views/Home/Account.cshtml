@@ -1,7 +1,13 @@
 ﻿@model FBLA_project.AccountModel
 
+@section Styles {
+    <link rel="stylesheet" href="/css/AccountStyles.css" />
+}
+
+<h1 class="title">Hello @Model?.UnprotectedData?.Name</h1>
 
 
+<div class="user-info-container">
 
-
-<button class="btn" href="/Home/Logout">Logout</button>
+    <a class="logout-btn" href="/Home/Logout">Logout</a>
+</div>

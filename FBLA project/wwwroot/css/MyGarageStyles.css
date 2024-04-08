@@ -1,20 +1,85 @@
 ﻿.car-property {
     font-size: 22px;
-    color:white;
+    color: lightblue;
+    margin-inline: 10px
 }
+
 .membership-display {
     color: white;
     font-size: 22px;
+    border: 1px solid white;
+    margin: 10px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 20px;
+    width: 40%;
+    min-width: 800px;
 }
 
 .greeting {
     font-size: 70px;
-    text-align:center;
-
-
+    text-align: center;
 }
 
 .greeting-info {
     font-size: 50px;
     text-align: center;
 }
+
+.login {
+    text-decoration: none;
+    border: 1px solid white;
+    border-radius: 50px;
+    padding: 15px;
+    background: #4a90e2;
+    color: white;
+    font-size: 30px;
+    transition: all 0.4s;
+}
+
+    .login:hover {
+        color: azure;
+        background-color: #5850e6;
+        font-size: 32px;
+    }
+
+.login-container {
+    display: flex;
+    justify-content: center;
+}
+
+.car-title {
+    color: lightblue;
+    font-weight: 600;
+    font-size: 24px;
+}
+
+.click-here {
+    background: #4a90e2;
+    border: 1px solid white;
+    margin: 10px;
+    padding: 15px;
+    border-radius: 60px;
+    position: relative;
+    top: 20px;
+    color: white;
+    text-decoration: none;
+    transition: all 0.4s;
+    font-size: 30px;
+}
+
+    .click-here:hover {
+        background-color: #5850e6;
+        color: azure;
+        font-size: 32px;
+    }
+
+    .membership-section {
+        display: flex;
+        flex-direction: column;
+        align-items:center;
+    }
+
+    
