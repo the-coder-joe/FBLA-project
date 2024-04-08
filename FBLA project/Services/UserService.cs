@@ -80,6 +80,7 @@ namespace FBLA_project
                 Id = GenerateUserId()
             };
 
+            //var hash 
 
             List<User> users = getUsers() ?? new List<User>();
             users.Add(user);
