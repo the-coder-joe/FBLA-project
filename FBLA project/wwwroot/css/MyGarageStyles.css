@@ -32,6 +32,11 @@
 
     .login:hover {
         color: azure;
-        background-color: var(--zen-purple);
+        background-color: #5850e6;
         font-size: 35px;
     }
+
+.login-container {
+    display: flex;
+    justify-content: center;
+}
