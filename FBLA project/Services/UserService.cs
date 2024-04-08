@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.DataProtection;
-using System.Diagnostics.Eventing.Reader;
-using System.Security.Authentication;
 using System.Security.Cryptography;
+using System.Text;
 using System.Text.Json;
 
 namespace FBLA_project
@@ -14,13 +13,13 @@ namespace FBLA_project
         private static readonly string _sessionTokenKey = "Session Token Key";
         private static readonly string _userStoragekey = "User Storage Key";
 
-        private static readonly IDataProtector _sessionTokenProtector;
+
         private static readonly IDataProtector _userProtector;
 
+        private static readonly Dictionary<string, string> _activeSessionTokens = new();
         static UserService()
         {
             _dataProtectionProvider = DataProtectionProvider.Create("ApplicationName");
-            _sessionTokenProtector = _dataProtectionProvider.CreateProtector(_sessionTokenKey);
             _userProtector = _dataProtectionProvider.CreateProtector(_userStoragekey);
         }
         public static User? AuthenticateUser(string username, string password)
@@ -29,11 +28,11 @@ namespace FBLA_project
             if (userList is null) { return null; }
             foreach (User user in userList)
             {
-                if (user.UnprotectedInfo.Username == username && user.ProtectedInfo.Password != password)
+                if (user.UnprotectedInfo.Username == username && !(AuthenticatePassword(password, user.ProtectedInfo.Salt, user.ProtectedInfo.PasswordHash)))
                 {
                     throw new Exception("User does not exist");
                 }
-                if (user.UnprotectedInfo.Username == username && user.ProtectedInfo.Password == password)
+                if (user.UnprotectedInfo.Username == username && AuthenticatePassword(password, user.ProtectedInfo.Salt, user.ProtectedInfo.PasswordHash))
                 {
                     return user;
                 }
@@ -43,10 +42,10 @@ namespace FBLA_project
 
         public static string GenerateSessionToken(User user)
         {
-            string userData = JsonSerializer.Serialize<User>(user);
+            string id = user.Id.ToString();
+            string token = GenerateRandomBytes(10);
 
-            string token = _sessionTokenProtector.Protect(userData);
-
+            _activeSessionTokens.Add(token, id);
             return token;
         }
 
@@ -54,27 +53,32 @@ namespace FBLA_project
         {
             string? token = httpContext.Session.GetString("SessionToken");
 
-            if (token == null)
+            if (token is null)
             {
                 return null;
             }
-
-            string userData = _sessionTokenProtector.Unprotect(token);
-
-            User? user = JsonSerializer.Deserialize<User>(userData);
-
-            if (user is null)
+            string? userid;
+            if (_activeSessionTokens.TryGetValue(token, out userid))
             {
-                return null;
+                if (userid is not null)
+                {
+                    User? user = GetUserById(userid);
+                    return user;
+                }
             }
-
-            return user;
+            return null;
         }
 
-        public static void CreateNewUser(ProtectedData protectedData, UnprotectedData unprotected)
+        public static void CreateNewUser(string password, UnprotectedData unprotected)
         {
+            //generate the password hash
 
-            User user = new User
+            string salt = GenerateRandomBytes(4);
+            string hash = HashPasword(password, salt);
+
+            ProtectedData protectedData = new ProtectedData { IsAdmin = false, PasswordHash = hash, Salt = salt };
+
+            User user = new()
             {
                 ProtectedInfo = protectedData,
                 UnprotectedInfo = unprotected,
@@ -87,17 +91,17 @@ namespace FBLA_project
             setUsers(users);
         }
 
-        public static void ModifyUser(int userId, User newUser)
+        public static void ModifyUser(string userId, User newUser)
         {
             List<User>? users = getUsers();
-            if(users is null)
+            if (users is null)
             {
                 return;
             }
             for (int i = 0; i < users.Count; i++)
             {
                 User user = users[i];
-                if(user.Id == userId)
+                if (user.Id == userId)
                 {
                     users[i] = newUser;
                     setUsers(users);
@@ -106,20 +110,22 @@ namespace FBLA_project
             }
         }
 
-        public static int? GetUserIdByUsername(string username)
+        public static string? GetUserIdByUsername(string username)
         {
-            var users = getUsers();
+            List<User>? users = getUsers();
             if (users == null) return null;
-            foreach (var user in users)
+            foreach (User user in users)
             {
                 if (user.UnprotectedInfo.Username == username) { return user.Id; }
             }
             return null;
         }
 
-        public static User? GetUserById(int id)
+        public static User? GetUserById(string id)
         {
-            var users = getUsers();
+            List<User>? users = getUsers();
+            if (users is null) { return null; }
+
             foreach (User user in users)
             {
                 if (user.Id == id)
@@ -134,7 +140,7 @@ namespace FBLA_project
             string encrptedUserData = File.ReadAllText(_path);
             if (string.IsNullOrEmpty(encrptedUserData)) { return null; }
             //    string rawUserData = _userProtector.Unprotect(encrptedUserData);
-            var rawUserData = encrptedUserData;
+            string rawUserData = encrptedUserData;
             List<User>? users = JsonSerializer.Deserialize<List<User>>(rawUserData);
 
             return users;
@@ -143,12 +149,12 @@ namespace FBLA_project
         private static void setUsers(List<User> users)
         {
             string rawUserData = JsonSerializer.Serialize(users);
-           // string encriptedUserData = _userProtector.Protect(rawUserData);
-            var encriptedUserData = rawUserData;
+            // string encriptedUserData = _userProtector.Protect(rawUserData);
+            string encriptedUserData = rawUserData;
             File.WriteAllText(_path, encriptedUserData);
 
         }
-        private static int GenerateUserId()
+        private static string GenerateUserId()
         {
             byte[] randomBytes = new byte[sizeof(Int16)];
             using (RandomNumberGenerator rng = RandomNumberGenerator.Create())
@@ -156,15 +162,45 @@ namespace FBLA_project
                 rng.GetBytes(randomBytes);
             }
 
-            return BitConverter.ToInt16(randomBytes);
+            return BitConverter.ToInt16(randomBytes).ToString();
 
         }
 
         private static bool AuthenticatePassword(string password, string salt, string hash)
         {
-            var hashingAlgorithm = System.Security.Cryptography.SHA512.Create();
-            int iterations = 1000;
-            return false;
+            var checkHash = HashPasword(password, salt);
+            return hash == checkHash;
+        }
+
+        private static string GenerateRandomBytes(int numBytes)
+        {
+            byte[] randomBytes = new byte[numBytes];
+            using (RandomNumberGenerator rng = RandomNumberGenerator.Create())
+            {
+                rng.GetBytes(randomBytes);
+            }
+
+            return Convert.ToBase64String(randomBytes);
+        }
+
+
+        private static string HashPasword(string password, string saltString)
+        {
+            const int iterations = 350000;
+            byte[] salt = Encoding.ASCII.GetBytes(saltString);
+
+
+            HashAlgorithmName hashAlgorithm = HashAlgorithmName.SHA512;
+
+            byte[] hash = Rfc2898DeriveBytes.Pbkdf2(
+                    Encoding.UTF8.GetBytes(password),
+                    salt,
+                    iterations,
+                    hashAlgorithm,
+                    40);
+
+            return Convert.ToHexString(hash);
         }
     }
 }
+

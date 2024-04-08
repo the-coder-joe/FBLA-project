@@ -84,16 +84,16 @@ namespace FBLA_project
             if (user is null)
             { return View(); }
 
-            return RedirectToAction("Index", "Account");
+            return RedirectToAction("Account", "Home");
         }
 
         public IActionResult Account()
         {
             User? user = UserService.GetUserFromHttpContext(HttpContext);
             if (user is null)
-            { return View(); }
+            { return RedirectToAction("Home", "Login"); }
 
-            return View(new BaseModel { UnprotectedData = user.UnprotectedInfo });
+            return View(new AccountModel { UnprotectedData = user.UnprotectedInfo });
         }
 
         //handles form submission
@@ -121,18 +121,14 @@ namespace FBLA_project
                     return View(model);
                 }
 
-                if (user.ProtectedInfo.IsAdmin)
-                {
-                    return RedirectToAction("Index", "Home");
-                }
-
                 var token = UserService.GenerateSessionToken(user);
-
-                //add the session token validation
-
                 HttpContext.Session.SetString("SessionToken", token);
 
-                return RedirectToAction("AdminView", "Home");
+                if (user.ProtectedInfo.IsAdmin)
+                {
+                    return RedirectToAction("AdminView", "Home");
+                }
+                return RedirectToAction("Account", "Home");
             }
             return View();
         }
@@ -194,13 +190,8 @@ namespace FBLA_project
                 if (model.Password == model.ConfirmPassword)
                 {
                     UnprotectedData userInfo = model.UnprotectedInfo;
-                    ProtectedData protectedData = new ProtectedData
-                    {
-                        IsAdmin = false,
-                        Password = model.Password
-                    };
 
-                    UserService.CreateNewUser(protectedData, userInfo);
+                    UserService.CreateNewUser(model.Password, userInfo);
                     model.Message = "Account has successfully been created";
                     Response.Headers.Append("REFRESH", "1;URL=/Home/Login");
 
